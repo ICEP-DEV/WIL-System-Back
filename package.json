@@ -1,0 +1,28 @@
+{
+  "name": "wil-system-back",
+  "version": "1.0.0",
+  "description": "npm init\r npm i express\r npm install -g nodemon\r npm i nodemon -D",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ICEP-DEV/WIL-System-Back.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ICEP-DEV/WIL-System-Back/issues"
+  },
+  "homepage": "https://github.com/ICEP-DEV/WIL-System-Back#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
