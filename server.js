@@ -1,7 +1,9 @@
-const express = require('express')
+const express = require('express');
 const conn = require('./config/db')
-//const studentRoute = require('./routes/students')
-const app = express();app.use(express.json());
+const studentRoute = require('./routes/students')
+const app = express();
+
+app.use(express.json());
 app.use(express.urlencoded({extend: false}));
 
 
@@ -15,8 +17,8 @@ conn.connect((err)=>{
 
 
 
-//app.use('/api', studentRoute)
+app.use('/api', studentRoute)
 
 
 
-app.listen(5000, ()=> console.log("server is running on port: " +8080));
+app.listen(8080, ()=> console.log("server is running on port: " +8080));
