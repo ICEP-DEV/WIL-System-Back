@@ -1,8 +1,14 @@
 const express = require('express');
+var cors = require('cors')
 const conn = require('./config/db')
 const studentRoute = require('./routes/students')
 const app = express();
 
+const corsOptions = {
+    origin: '*'
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extend: false}));
 
