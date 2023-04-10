@@ -53,4 +53,114 @@ create: (data, callBack) => {
       }
     );
   },
+
+
+  getAllLectures: callBack => {
+    conn.query(
+
+     ` SELECT * 
+      FROM wil_coordinator A, department B
+      WHERE A.dept_id = B.dept_id`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+
+
+
+
+  internshipEvaluation: callBack => {
+    conn.query(
+
+      "SELECT * FROM evaluation",
+      [],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+
+
+  evaluationAnswers: (data, callBack) => {
+    console.log(data);
+    conn.query(
+      //INSERT INTO `evaluation_criteria`( `student_no`, `wilCoord_id`, `evaluation_id`, `intern_criteria`) VALUES (218049799,2235,'Always');
+      `insert into evaluation_criteria(student_no, wilCoord_id, evaluation_id, intern_criteria) 
+                values(?,?,?,?)`,
+      [
+        data.student_no,
+        data.wilCoord_id,
+        data.evaluation_id,
+        data.intern_criteria
+    
+       
+       
+      ],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+//To be used and moved to wil coordinator service 
+  getStudentSubmitted: callBack => {
+    conn.query(
+
+     ` SELECT * 
+     FROM student A, department B, wil_coordinator C, stud_dep D 
+     WHERE A.student_no = D.student_no
+     AND B.dept_id = C.dept_id
+     AND B.dept_id = D.dept_id;`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+
+  getStudEvaluationbyId:  (student_no, callBack) => {
+   // console.log(student_no);
+    conn.query(
+
+     ` SELECT * 
+     FROM student A, evaluation B, evaluation_criteria C
+     WHERE A.student_no = ?
+     AND A.student_no = C.student_no
+     AND B.evaluation_id = C.evaluation_id`,
+      [student_no],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+
+  // getUserByUserId: (id, callBack) => {
+  //   pool.query(
+  //     `select id,firstName,lastName,gender,email,number from registration where id = ?`,
+  //     [id],
+  //     (error, results, fields) => {
+  //       if (error) {
+  //         callBack(error);
+  //       }
+  //       return callBack(null, results[0]);
+  //     }
+  //   );
+  // },
+
 };
