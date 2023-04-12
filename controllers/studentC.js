@@ -1,7 +1,7 @@
 const {
   create,
   getUserByStudentNum,
-  getStudentInfo,
+  getStudentInfoById,
   internshipEvaluation,
   evaluationAnswers,
   getStudentSubmitted,
@@ -45,13 +45,15 @@ module.exports = {
       const result = compareSync(body.itsPin, results.itsPin);
       if (result) {
         results.itsPin = undefined;
-        const jsontoken = sign({ result: results }, "12345", {
+        const jsontoken = sign({ result: results }, process.env.JWT_KEY, {
           expiresIn: "1h",
         });
         return res.json({
           success: 1,
           message: "login successfully",
           token: jsontoken,
+          data: results
+          
         });
       } else {
         return res.json({
@@ -63,8 +65,10 @@ module.exports = {
   },
 
 
-  getStudentInfo: (req, res) => {
-    getStudentInfo((err, results) => {
+  getStudentInfoById: (req, res) => {
+    const student_no = req.params.student_no
+  
+    getStudentInfoById(student_no,(err, results) => {
       if (err) {
         console.log(err);
         return;
