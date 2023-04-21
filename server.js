@@ -1,7 +1,8 @@
 const express = require('express')
 const conn = require('./config/db')
-const studentRoute = require('./routes/wilCoordinator')
-const app = express();app.use(express.json());
+const studentRoute = require('./routes/studNotification')
+const app = express();
+app.use(express.json());
 app.use(express.urlencoded({extend: false}));
 
 
