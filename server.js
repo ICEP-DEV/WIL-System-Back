@@ -2,6 +2,8 @@ const express = require('express');
 var cors = require('cors')
 const conn = require('./config/db')
 const studentRoute = require('./routes/students')
+const wilRoute = require('./routes/coordinator')
+const mentorRoute = require('./routes/mentorR')
 const app = express();
 
 const corsOptions = {
@@ -23,7 +25,9 @@ conn.connect((err)=>{
 
 
 
-app.use('/api', studentRoute)
+app.use('/api', studentRoute);
+app.use('/api', wilRoute);
+app.use('/api', mentorRoute)
 
 
 

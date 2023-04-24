@@ -2,7 +2,7 @@ const conn = require("../config/db");
 module.exports = {
 
 
- 
+ /////////////////CREATE USER FUNCTION FOR STUDENT,ADMIN,REGISTRAR////////////////
 
   create: (data, userType, callBack) => {
     if (userType === "student") {
@@ -66,7 +66,7 @@ module.exports = {
 
 
 
-///////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////LOGIN FOR ADMIN/////////////////////////////////////////////////
   getUserByAdmin: (admin_no, userType, callBack) => {
   
     if(userType === 'admin'){
@@ -82,7 +82,7 @@ module.exports = {
     );
     }
   },
-///////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////LOGIN FOR STUDENT/////////////////////////////////////////////////
 
   getUserByStudent: (student_no , userType,callBack) => {
     if(userType === 'student'){
@@ -97,27 +97,11 @@ module.exports = {
       }
     );
   }
-},
-///////////////////////////////////////////////////////////////////////////////
+  },
 
-getUserByStudent: (student_no , userType,callBack) => {
-  if(userType === 'student'){
-  conn.query(
-    `select * from student where student_no = ?`,
-    [student_no],
-    (error, results, fields) => {
-      if (error) {
-        callBack(error);
-      }
-      return callBack(null, results[0]);
-    }
-  );
-}
-},
+  //////////////////////////////LOGIN FOR REGISTRAR/////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-
-getUserByRegistrar: (registrar_no , userType,callBack) => {
+ getUserByRegistrar: (registrar_no , userType,callBack) => {
   if(userType === 'registrar'){
   conn.query(
     `select * from registrar where registrar_no = ?`,
@@ -132,7 +116,7 @@ getUserByRegistrar: (registrar_no , userType,callBack) => {
 }
 },
 
-///////////////////////////////////////////////////////////////////////////////
+/////////////////GETTING STUDENT INFORMATION TO POPULATE THE RECOMMENDATION LETTER//////////////
 
 
   getStudentInfoById: (student_no, callBack) => {
@@ -148,12 +132,13 @@ getUserByRegistrar: (registrar_no , userType,callBack) => {
         if (error) {
           callBack(error);
         }
+        console.log(results);
         return callBack(null, results);
       }
     );
   },
 
-  ///////////////////////////////////////////////////////////////////////////////
+  ////////////////////////STUDENT TO BE ABLE TO PICK THEIR LECTURES//////////////
 
   getAllLectures: (callBack) => {
     conn.query(
@@ -170,7 +155,7 @@ getUserByRegistrar: (registrar_no , userType,callBack) => {
     );
   },
 
-  ///////////////////////////////////////////////////////////////////////////////
+  ///////////TO GET QUESTIONS FOR EVALUATION AND POPULATE THE FRONT END////////////
 
   internshipEvaluation: (callBack) => {
     conn.query("SELECT * FROM evaluation", [], (error, results, fields) => {
@@ -202,14 +187,23 @@ getUserByRegistrar: (registrar_no , userType,callBack) => {
     );
   },
   //To be used and moved to wil coordinator service
-  getStudentSubmitted: (callBack) => {
+ 
+
+  ////////////////////////////////////STUDENT REPORT///////////////////////////////////////////
+
+  submitReport: (data, callBack) => {
+    console.log(data);
     conn.query(
-      ` SELECT * 
-     FROM student A, department B, wil_coordinator C, stud_dep D 
-     WHERE A.student_no = D.student_no
-     AND B.dept_id = C.dept_id
-     AND B.dept_id = D.dept_id;`,
-      [],
+       //INSERT INTO `report`(`report_id`, `student_no`, `wilCoord_id`, `report_doc`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]')
+      `insert into report(report_id,student_no, wilCoord_id, report_doc) 
+                values(?,?,?,?)`,
+      [
+        data.report_id,
+        data.student_no,
+        data.wilCoord_id,
+        data.report_doc,
+      
+      ],
       (error, results, fields) => {
         if (error) {
           callBack(error);
@@ -219,34 +213,60 @@ getUserByRegistrar: (registrar_no , userType,callBack) => {
     );
   },
 
-  getStudEvaluationbyId: (student_no, callBack) => {
-    // console.log(student_no);
+  //////////////////////MONTHLY LOGBOOK REPORT///////////////////////////
+  monthlyLog : (data, callBack) =>{
+
     conn.query(
-      ` SELECT * 
-     FROM student A, evaluation B, evaluation_criteria C
-     WHERE A.student_no = ?
-     AND A.student_no = C.student_no
-     AND B.evaluation_id = C.evaluation_id`,
-      [student_no],
-      (error, results, fields) => {
-        if (error) {
-          callBack(error);
-        }
-        return callBack(null, results);
+     // INSERT INTO `logbook`(`logbok_id`, `student_no`, `mentor_id`, `date`, `log_description`, `log_status`, `submitted_at`) 
+    // VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')
+    `INSERT INTO logbook(logbook_id, student_no, mentor_id, date, log_description,)  
+     VALUES (?,?,?,?,?)`,
+     [
+      data.logbook_id,
+      data.student_no,
+      data.mentor_id,
+      data.date,
+      data.log_description,
+    
+
+     ],
+     (error, results, fields) => {
+      if (error) {
+        callBack(error);
       }
+      return callBack(null, results);
+     }
+
     );
   },
 
-  // getUserByUserId: (id, callBack) => {
-  //   pool.query(
-  //     `select id,firstName,lastName,gender,email,number from registration where id = ?`,
-  //     [id],
-  //     (error, results, fields) => {
-  //       if (error) {
-  //         callBack(error);
-  //       }
-  //       return callBack(null, results[0]);
-  //     }
-  //   );
-  // },
-};
+  //////////////////////UPDATEMONTHLY LOGBOOK REPORT///////////////////////////
+
+  updateMonthlyLog: (data, callBack) => {
+    conn.query(
+      `UPDATE logbook 
+      SET date =?, log_description = ?, log_status =?
+      WHERE logbook_id = ? `,
+      [
+        data.date,
+        data.log_description,
+        data.log_status,
+        data.logbook_id,
+      ],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        } else if (results.affectedRows === 0) {
+          callBack(new Error(`No logbook record found with ID ${data.logbook_id}`));
+        } else {
+          callBack(null, results[0]);
+        }
+      }
+    );
+  }
+  
+
+
+
+
+}
