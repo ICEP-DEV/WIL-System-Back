@@ -1,6 +1,6 @@
 const express = require('express')
 const conn = require('./config/db')
-const studentRoute = require('./routes/wilForms')
+const studentRoute = require('./routes/registerNotification')
 const app = express();app.use(express.json());
 app.use(express.urlencoded({extend: false}));
 
