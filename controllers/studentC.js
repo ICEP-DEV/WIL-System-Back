@@ -11,7 +11,8 @@ const {
   getStudEvaluationbyId,
   submitReport,
   monthlyLog,
-  updateMonthlyLog
+  updateMonthlyLog,
+  willForm
   
 } = require("../service/studentS");
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
@@ -285,8 +286,24 @@ const body = req.body
   })
   },
 
+  ////////////////////////////////////////////////////////////////////////////
 
-  
+  willForms: (req,res) => {
+    const body = req.body
+      willForm(body, (err,rsults)=>{
+        if(err){
+          console.log(err);
+          return res.json({
+            success: 0,
+            message: err.message
+          });
+        }
+        return res.json({
+          success :1,
+          message: "Update successfully!"
+        });
+      })
+      },
 
 
 

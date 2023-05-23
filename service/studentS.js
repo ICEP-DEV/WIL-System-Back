@@ -263,10 +263,39 @@ module.exports = {
         }
       }
     );
-  }
+  },
   
 
+  // //////////////////////////////////////////
 
+  willForm : (data, callBack) =>{
 
+    conn.query(
+    
+    `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, email, physicalAddress, postalAddress, postalCode, city, studyPeriod)  
+     VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
+     [
+      data.wilForm_Id,
+      data.student_no,
+      data.approvedEmployer,
+      data.contactPerson,
+      data.telNumber,
+      data.email,
+      data.physicalAddress,
+      data.postalAddress,
+      data.postalCode,
+      data.city,
+      data.studyPeriod,
+
+     ],
+     (error, results, fields) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, results);
+     }
+
+    );
+  },
 
 }
