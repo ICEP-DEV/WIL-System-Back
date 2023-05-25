@@ -12,7 +12,9 @@ const {
   studReport,
   monthlyLogbook,
   monthlyLogUpdate,
-  willForms
+  willForms,
+  admForms,
+  uploadFile
 } = require("../controllers/studentC");
 
 router.post("/", createUser);
@@ -24,6 +26,8 @@ router.post("/studReport",studReport)
 router.post("/logBook", monthlyLogbook)
 router.put("/logBook",monthlyLogUpdate)
 router.post("/forms",willForms)
+router.post("/admform",admForms)
+
 
 
 

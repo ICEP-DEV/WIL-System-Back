@@ -5,6 +5,7 @@ const studentRoute = require('./routes/students')
 const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
 const app = express();
+const multer = require('multer');
 
 const corsOptions = {
     origin: '*'

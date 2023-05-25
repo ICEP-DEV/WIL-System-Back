@@ -12,7 +12,8 @@ const {
   submitReport,
   monthlyLog,
   updateMonthlyLog,
-  willForm
+  willForm,
+  admForm
   
 } = require("../service/studentS");
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
@@ -253,19 +254,19 @@ studReport: (req, res) => {
 },
 
  //////////////////////MONTHLY LOGBOOK REPORT///////////////////////////
-monthlyLogbook: (req,res) => {
-  const data = req.body;
-  monthlyLog(data, (err, results) =>{
-    if(err){
-      console.log(err);
-      return;
-    }
-    return res.json({
-      success: 1,
-      data: results
-    });
-  })
-},
+  monthlyLogbook: (req,res) => {
+    const data = req.body;
+    monthlyLog(data, (err, results) =>{
+      if(err){
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    })
+  },
 
 //////////////////////UPDATEMONTHLY LOGBOOK REPORT///////////////////////////
 
@@ -286,7 +287,7 @@ const body = req.body
   })
   },
 
-  ////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////WILFORM//////////////////////////////////////////
 
   willForms: (req,res) => {
     const body = req.body
@@ -304,6 +305,28 @@ const body = req.body
         });
       })
       },
+
+/////////////////////////////ADMISSION FORM///////////////////////////////      
+
+admForms: (req,res) => {
+  const body = req.body
+  admForm(body, (err,rsults)=>{
+      if(err){
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: err.message
+        });
+      }
+      return res.json({
+        success :1,
+        message: "Update successfully!"
+      });
+    })
+    },
+
+
+////////////////////////////SYSTEM DOCUMENTATION//////////////////////////////////////////////    
 
 
 

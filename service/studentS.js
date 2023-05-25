@@ -1,4 +1,5 @@
 const conn = require("../config/db");
+const multer = require('multer');
 module.exports = {
 
 
@@ -207,7 +208,7 @@ module.exports = {
       (error, results, fields) => {
         if (error) {
           callBack(error);
-        }
+        };
         return callBack(null, results);
       }
     );
@@ -266,7 +267,7 @@ module.exports = {
   },
   
 
-  // //////////////////////////////////////////
+  ///////////////////////////////////////WIL FORM//////////////////////////////////////////
 
   willForm : (data, callBack) =>{
 
@@ -298,4 +299,42 @@ module.exports = {
     );
   },
 
-}
+  /////////////////////////////////////////////ADMISSION FORM//////////////////////////////////////
+
+  admForm : (data, callBack) =>{
+
+    conn.query(
+    
+      `INSERT INTO admissionform (adm_Id, student_no, firstChoice, secondChoice, 
+        enrollType, finacialAid, campus) VALUES (?,?,?,?,?,?,?)`,
+     [
+      data.adm_Id,
+      data.student_no,
+      data.firstChoice,
+      data.secondChoice,
+      data.enrollType,
+      data.finacialAid,
+      data.campus,
+
+     ],
+     (error, results, fields) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, results);
+     }
+
+    );
+  },
+
+
+  //////////////////////////////////SYSTEM DOCUMENTATION/////////////////////////////
+
+
+  
+
+//////////////////////////////////////EMPLOYMENT LETTER//////////////////////////////////////////////
+
+  
+
+};
