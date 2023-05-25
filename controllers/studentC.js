@@ -12,7 +12,8 @@ const {
   submitReport,
   monthlyLog,
   updateMonthlyLog,
-  willForm
+  willForm,
+  uploadPlacementLetter
   
 } = require("../service/studentS");
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
@@ -290,7 +291,7 @@ const body = req.body
 
   willForms: (req,res) => {
     const body = req.body
-      willForm(body, (err,rsults)=>{
+      willForm(body, (err,results)=>{
         if(err){
           console.log(err);
           return res.json({
@@ -305,7 +306,44 @@ const body = req.body
       })
       },
 
+////////////////////////////////////////////////////////////////////////////
 
+  uploadPlacementLetters: (req, res) => {
+    const body = req.body
+    // console.log(' body',req.body);
+    // console.log('file', req.file);
+    const filePath = req.file.path 
+const filebody = req.file.originalname
+   const data ={
+     filName:filebody,
+     path:filePath
+   }
+console.log("file path",data)
+
+ 
+    uploadPlacementLetter(data,(err, results) =>{
+
+    if(!req.file){
+        return res.json({
+          success: 2,
+          message: 'Please upload a file.'
+        })
+       }
+      if(err){
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: 'Error storing file in database',
+        });
+      }
+      return res.json({
+        success :1,
+        message: 'File uploaded successfully.',
+      });
+   
+
+    })
+  }
 
 
 };

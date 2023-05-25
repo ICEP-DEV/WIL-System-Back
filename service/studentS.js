@@ -266,13 +266,11 @@ module.exports = {
   },
   
 
-  // //////////////////////////////////////////
+///////////////////////////////////////////
 
   willForm : (data, callBack) =>{
-
-    conn.query(
-    
-    `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, email, physicalAddress, postalAddress, postalCode, city, studyPeriod)  
+  conn.query(
+    `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, emp_email, physicalAddress, postalAddress, postalCode, city, studyPeriod)  
      VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
      [
       data.wilForm_Id,
@@ -280,7 +278,7 @@ module.exports = {
       data.approvedEmployer,
       data.contactPerson,
       data.telNumber,
-      data.email,
+      data.emp_email,
       data.physicalAddress,
       data.postalAddress,
       data.postalCode,
@@ -297,5 +295,30 @@ module.exports = {
 
     );
   },
+
+ ///////////////////////////////////////////
+uploadPlacementLetter: (data, callBack) => {
+  
+ console.log('data',data);
+  conn.query(
+    `INSERT INTO placementLetter(fileName,path) VALUES (?,?)`,
+  [
+  data.filName,
+  data.path
+  ],
+
+  (error, results, fields) => {
+    if (error) {
+      callBack(error);
+    }
+    return callBack(null, results);
+   }
+   
+  )
+}
+
+
+
+
 
 }
