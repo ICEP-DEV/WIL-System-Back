@@ -21,16 +21,15 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cloudinary": "^1.36.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-<<<<<<< HEAD
-    "mysql": "^2.18.1",
-    "nodemailer": "^6.9.1"
-=======
     "express-fileupload": "^1.4.0",
+    "handlebars": "^4.7.7",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.2.3"
->>>>>>> 74fa7e2da07d3c91f377d34f889be9cb4f3b97bd
+    "mysql2": "^3.2.3",
+    "nodemailer": "^6.9.1",
+    "web-push": "^3.6.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

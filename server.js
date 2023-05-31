@@ -1,14 +1,15 @@
 const express = require('express')
+const cors = require('cors')
 const conn = require('./config/db')
-<<<<<<< HEAD
-const studentRoute = require('./routes/registerNotification')
-const app = express();app.use(express.json());
-=======
-const studentRoute = require('./routes/studNotification')
-const app = express();
+const app = express();app.use(express.json())
+
+
+app.use(cors());
+
 app.use(express.json());
->>>>>>> 74fa7e2da07d3c91f377d34f889be9cb4f3b97bd
+
 app.use(express.urlencoded({extend: false}));
+const studentRoute = require('./routes/admissionForm')
 
 
 conn.connect((err)=>{

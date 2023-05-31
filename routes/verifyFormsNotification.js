@@ -1,9 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const webpush = require('web-push')
 const conn = require('../config/db')
+const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
 const router = express.Router()
-const nodemailer = require('nodemailer')
-const handlebars = require('handlebars')
 
 
 // Define your email template using Handlebars
@@ -52,5 +53,6 @@ transporter.sendMail(emailMessage, (error, info) => {
     console.log('Email sent: ' + info.response);
   }
 });
+
 
 module.exports = router;

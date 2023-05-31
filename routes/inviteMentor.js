@@ -5,17 +5,17 @@ const router = express.Router()
 
 router.post('/mentor', (req,res,next)=>{
    
-    const values = [
+    const values = [     
      req.body.mentor_Id,
-     req.body.surname,
-     req.body.initials,
-     req.body.email,
-     req.body.password,
-     req.body.company_Id,
+     req.body.title,
+     req.body.m_name,
+     req.body.m_surname,
+     req.body.email_address,
+     req.body.mobileNo,
     ]
 
-    const sql = `INSERT INTO mentor (mentor_Id,surname, initials,
-                email, password, company_Id) VALUES (?,?,?,?,?,?)`
+    const sql = `INSERT INTO mentor (mentor_Id, title, m_name, m_surname,
+        email_address, mobileNo) VALUES (?,?,?,?,?,?)`
 
     conn.query(sql, values, function(err, result){
         if(err)throw err;
@@ -25,45 +25,5 @@ router.post('/mentor', (req,res,next)=>{
     res.status(200).json({'Message' :"Success"});
 })
 
-router.post('/company', (req,res,next)=>{
-   
-    const values = [
-     req.body.company_Id,
-     req.body.name,
-     req.body.address,
-     req.body.email,
-     req.body.telephone
-    ]
-
-    const sql = `INSERT INTO company (company_Id, name, address,
-                email, telephone) VALUES (?,?,?,?,?)`
-
-    conn.query(sql, values, function(err, result){
-        if(err)throw err;
-            console.log("Successfully inserted")
-    })
-
-    res.status(200).json({'Message' :"Success"});
-})
-
-router.post('/invitation', (req,res,next)=>{
-   
-    const values = [
-     req.body.invite_Id,
-     req.body.platform_Id,
-     req.body.date,
-     req.body.link
-    ]
-
-    const sql = `INSERT INTO invitation (invite_Id, platform_Id, date,
-        link) VALUES (?,?,?,?)`
-
-    conn.query(sql, values, function(err, result){
-        if(err)throw err;
-            console.log("Successfully inserted")
-    })
-
-    res.status(200).json({'Message' :"Success"});
-})
 
 module.exports = router;
