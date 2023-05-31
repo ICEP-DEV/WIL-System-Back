@@ -14,7 +14,9 @@ const {
   monthlyLogbook,
   monthlyLogUpdate,
   willForms,
-  uploadPlacementLetters
+  uploadPlacementLetters,
+  admForms,
+  uploadFile
 } = require("../controllers/studentC");
 
 const storage = multer.diskStorage({
@@ -38,6 +40,9 @@ router.post("/logBook", monthlyLogbook)
 router.put("/logBook",monthlyLogUpdate)
 router.post("/forms",willForms)
 router.post("/uploadFolder", upload.single('avatar'),uploadPlacementLetters)
+router.post("/admform",admForms)
+
+
 
 
 module.exports = router;
