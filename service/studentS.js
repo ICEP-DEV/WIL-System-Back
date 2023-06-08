@@ -304,7 +304,7 @@ uploadPlacementLetter: (data, callBack) => {
   conn.query(
     `INSERT INTO placementLetter(fileName,path) VALUES (?,?)`,
   [
-  data.filName,
+  data.fileName,
   data.path
   ],
 
@@ -329,13 +329,12 @@ uploadPlacementLetter: (data, callBack) => {
 
     conn.query(
     
-      `INSERT INTO admissionform (adm_Id, student_no, firstChoice, secondChoice, 
-        enrollType, finacialAid, campus) VALUES (?,?,?,?,?,?,?)`,
+      `INSERT INTO admissionform (adm_Id, student_no, firstChoice, 
+        enrollType, finacialAid, campus) VALUES (?,?,?,?,?,?)`,
      [
       data.adm_Id,
       data.student_no,
       data.firstChoice,
-      data.secondChoice,
       data.enrollType,
       data.finacialAid,
       data.campus,
@@ -351,14 +350,31 @@ uploadPlacementLetter: (data, callBack) => {
     );
   },
 
-}
+
   //////////////////////////////////SYSTEM DOCUMENTATION/////////////////////////////
 
-
+  uploadSysDoc: (data, callBack) => {
   
-
+    console.log('Service',data);
+     conn.query(
+       `INSERT INTO systemDocumentaion(sFileName,sPath) VALUES (?,?)`,
+     [
+     data.fileName,
+     data.path
+     ],
+   
+     (error, results, fields) => {
+       if (error) {
+         callBack(error);
+       }
+       return callBack(null, results);
+      }
+      
+     )
+   },
+  
 //////////////////////////////////////EMPLOYMENT LETTER//////////////////////////////////////////////
 
   
 
-
+  }

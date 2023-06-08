@@ -16,7 +16,7 @@ const {
   willForms,
   uploadPlacementLetters,
   admForms,
-  uploadFile
+  uploadSystemDoc
 } = require("../controllers/studentC");
 
 const storage = multer.diskStorage({
@@ -28,6 +28,17 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
+//////////////////////////////////////////////////
+const systemStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+     cb(null, './systemDoc');
+  },
+  filename: function (req, file, cb) {
+     cb(null, file.originalname);
+  }
+});
+const systemUpload = multer({ storage: systemStorage });
+
 
 
 router.post("/", createUser);
@@ -41,6 +52,7 @@ router.put("/logBook",monthlyLogUpdate)
 router.post("/forms",willForms)
 router.post("/uploadFolder", upload.single('avatar'),uploadPlacementLetters)
 router.post("/admform",admForms)
+router.post("/uploadSysDoc",systemUpload.single('document'), uploadSystemDoc)
 
 
 

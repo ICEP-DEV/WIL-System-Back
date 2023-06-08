@@ -14,25 +14,22 @@ const {
   updateMonthlyLog,
   willForm,
   uploadPlacementLetter,
-  admForm
-  
+  admForm,
+  uploadSysDoc,
 } = require("../service/studentS");
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
-
-
-
   createUser: (req, res) => {
     const body = req.body;
-    const userType = body.userType
-    console.log(userType); 
+    const userType = body.userType;
+    console.log(userType);
     const salt = genSaltSync(10);
     body.itsPin = hashSync(body.itsPin, salt);
 
-    if (userType === 'student') {
-      create(body, userType,(err, results) => {
+    if (userType === "student") {
+      create(body, userType, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -45,8 +42,8 @@ module.exports = {
           data: results,
         });
       });
-    } else if (userType === 'admin') {
-      create(body, userType,(err, results) => {
+    } else if (userType === "admin") {
+      create(body, userType, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -59,8 +56,8 @@ module.exports = {
           data: results,
         });
       });
-    } else if (userType === 'registrar') {
-      create(body, userType,(err, results) => {
+    } else if (userType === "registrar") {
+      create(body, userType, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -81,16 +78,15 @@ module.exports = {
     }
   },
 
-
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
   login: (req, res) => {
-   // const { user_type, username, password } = req.body;
-   const body = req.body;
-   const userType = body.userType
-   console.log(userType);
+    // const { user_type, username, password } = req.body;
+    const body = req.body;
+    const userType = body.userType;
+    console.log(userType);
     if (userType == "admin") {
-      getUserByAdmin(body.admin_no, userType,(err, results) => {
+      getUserByAdmin(body.admin_no, userType, (err, results) => {
         if (err) {
           console.log(err);
         }
@@ -103,15 +99,19 @@ module.exports = {
         const result = compareSync(body.itsPin, results.itsPin);
         if (result) {
           results.itsPin = undefined;
-          const jsontoken = sign({ result: results, userType: userType }, process.env.JWT_KEY, {
-            expiresIn: "1h",
-          });
-          
+          const jsontoken = sign(
+            { result: results, userType: userType },
+            process.env.JWT_KEY,
+            {
+              expiresIn: "1h",
+            }
+          );
+
           return res.json({
             success: 1,
             message: "login successfully",
             token: jsontoken,
-            data: results
+            data: results,
           });
         } else {
           return res.json({
@@ -121,7 +121,7 @@ module.exports = {
         }
       });
     } else if (userType === "student") {
-      getUserByStudent(body.student_no, userType,(err, results) => {
+      getUserByStudent(body.student_no, userType, (err, results) => {
         if (err) {
           console.log(err);
         }
@@ -141,7 +141,7 @@ module.exports = {
             success: 1,
             message: "login successfully",
             token: jsontoken,
-            data: results
+            data: results,
           });
         } else {
           return res.json({
@@ -151,7 +151,7 @@ module.exports = {
         }
       });
     } else if (userType === "registrar") {
-      getUserByRegistrar(body.registrar_no, userType,(err, results) => {
+      getUserByRegistrar(body.registrar_no, userType, (err, results) => {
         if (err) {
           console.log(err);
         }
@@ -171,7 +171,7 @@ module.exports = {
             success: 1,
             message: "login successfully",
             token: jsontoken,
-            data: results
+            data: results,
           });
         } else {
           return res.json({
@@ -187,25 +187,25 @@ module.exports = {
       });
     }
   },
-  
-/////////////////////////////////////////////////////////////
 
-StudentInfoById: (req, res) => {
-    const student_no = req.params.student_no
-  
-    getStudentInfoById(student_no,(err, results) => {
+  /////////////////////////////////////////////////////////////
+
+  StudentInfoById: (req, res) => {
+    const student_no = req.params.student_no;
+
+    getStudentInfoById(student_no, (err, results) => {
       if (err) {
         console.log(err);
         return;
       }
-   
+
       return res.json({
         success: 8,
-        data: results
+        data: results,
       });
     });
   },
-////////////////////QUESTIONS AND ANSWERS/////////////////////////////////////////
+  ////////////////////QUESTIONS AND ANSWERS/////////////////////////////////////////
   answers: (req, res) => {
     const data = req.body;
     console.log(data);
@@ -216,12 +216,12 @@ StudentInfoById: (req, res) => {
       }
       return res.json({
         success: 1,
-        data: results
+        data: results,
       });
     });
   },
 
-/////////////////////THE QUESTIONS FOR THE EVALUATION////////////////////////////////////////
+  /////////////////////THE QUESTIONS FOR THE EVALUATION////////////////////////////////////////
   internEvaluation: (req, res) => {
     internshipEvaluation((err, results) => {
       if (err) {
@@ -229,147 +229,171 @@ StudentInfoById: (req, res) => {
         return;
       }
       return res.json({
-        
         success: 1,
-        data: results
-        
+        data: results,
       });
     });
   },
 
-
-///////////////////////SUBMIT REPORT//////////////////////////////////////
-studReport: (req, res) => {
-  const data = req.body;
-  //console.log(data);
-  submitReport(data, (err, results) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    return res.json({
-      success: 1,
-      data: results
-    });
-  });
-},
-
- //////////////////////MONTHLY LOGBOOK REPORT///////////////////////////
-  monthlyLogbook: (req,res) => {
+  ///////////////////////SUBMIT REPORT//////////////////////////////////////
+  studReport: (req, res) => {
     const data = req.body;
-    monthlyLog(data, (err, results) =>{
-      if(err){
+    //console.log(data);
+    submitReport(data, (err, results) => {
+      if (err) {
         console.log(err);
         return;
       }
       return res.json({
         success: 1,
-        data: results
+        data: results,
       });
-    })
+    });
   },
 
-//////////////////////UPDATEMONTHLY LOGBOOK REPORT///////////////////////////
-
-monthlyLogUpdate: (req,res) => {
-const body = req.body
-  updateMonthlyLog(body, (err,rsults)=>{
-    if(err){
-      console.log(err);
+  //////////////////////MONTHLY LOGBOOK REPORT///////////////////////////
+  monthlyLogbook: (req, res) => {
+    const data = req.body;
+    monthlyLog(data, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
       return res.json({
-        success: 0,
-        message: err.message
+        success: 1,
+        data: results,
       });
-    }
-    return res.json({
-      success :1,
-      message: "Update successfully!"
     });
-  })
+  },
+
+  //////////////////////UPDATEMONTHLY LOGBOOK REPORT///////////////////////////
+
+  monthlyLogUpdate: (req, res) => {
+    const body = req.body;
+    updateMonthlyLog(body, (err, rsults) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: err.message,
+        });
+      }
+      return res.json({
+        success: 1,
+        message: "Update successfully!",
+      });
+    });
   },
 
   //////////////////////////////////WILFORM//////////////////////////////////////////
 
-  willForms: (req,res) => {
-    const body = req.body
-      willForm(body, (err,results)=>{
-        if(err){
-          console.log(err);
-          return res.json({
-            success: 0,
-            message: err.message
-          });
-        }
-        return res.json({
-          success :1,
-          message: "Update successfully!"
-        });
-      })
-      },
-
-////////////////////////////////////////////////////////////////////////////
-/////////////////////////////ADMISSION FORM///////////////////////////////      
-
-admForms: (req,res) => {
-  const body = req.body
-  admForm(body, (err,rsults)=>{
-      if(err){
+  willForms: (req, res) => {
+    const body = req.body;
+    willForm(body, (err, results) => {
+      if (err) {
         console.log(err);
         return res.json({
           success: 0,
-          message: err.message
+          message: err.message,
         });
       }
       return res.json({
-        success :1,
-        message: "Update successfully!"
+        success: 1,
+        message: "Update successfully!",
       });
-    })
-    },
+    });
+  },
 
+  ////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////ADMISSION FORM///////////////////////////////
 
-////////////////////////////SYSTEM DOCUMENTATION//////////////////////////////////////////////    
+  admForms: (req, res) => {
+    const body = req.body;
+    admForm(body, (err, rsults) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: err.message,
+        });
+      }
+      return res.json({
+        success: 1,
+        message: "Update successfully!",
+      });
+    });
+  },
 
+  ////////////////////////////PLACEMENT LETTER//////////////////////////////////////////////
 
   uploadPlacementLetters: (req, res) => {
-    const body = req.body
+    const body = req.body;
     // console.log(' body',req.body);
     // console.log('file', req.file);
-    const filePath = req.file.path 
-const filebody = req.file.originalname
-   const data ={
-     filName:filebody,
-     path:filePath
-   }
-console.log("file path",data)
+    const filePath = req.file.path;
+    const filebody = req.file.originalname;
+    const data = {
+      fileName: filebody,
+      path: filePath,
+    };
+    console.log("file path", data);
 
- 
-    uploadPlacementLetter(data,(err, results) =>{
-
-    if(!req.file){
+    uploadPlacementLetter(data, (err, results) => {
+      if (!req.file) {
         return res.json({
           success: 2,
-          message: 'Please upload a file.'
-        })
-       }
-      if(err){
+          message: "Please upload a file.",
+        });
+      }
+      if (err) {
         console.log(err);
         return res.json({
           success: 0,
-          message: 'Error storing file in database',
+          message: "Error storing file in database",
         });
       }
       return res.json({
-        success :1,
-        message: 'File uploaded successfully.',
+        success: 1,
+        message: "File uploaded successfully.",
       });
-   
+    });
+  },
 
-    })
-  }
+ //////////////////////////////////SYSTEM DOCUMENTATION/////////////////////////////
+ uploadSystemDoc: (req, res) => {
+  const body = req.body;
+  // console.log(' body',req.body);
+  // console.log('file', req.file);
+  const filePath = req.file.path;
+  const filebody = req.file.originalname;
+  const data = {
+    fileName: filebody,
+    path: filePath,
+  };
+  console.log("file path", data);
+
+  uploadSysDoc(data, (err, results) => {
+    if (!req.file) {
+      return res.json({
+        success: 2,
+        message: "Please upload a file.",
+      });
+    }
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: 0,
+        message: "Error storing file in database",
+      });
+    }
+    return res.json({
+      success: 1,
+      message: "File uploaded successfully.",
+    });
+  });
+},
+
+
 
 
 };
-
-
-
