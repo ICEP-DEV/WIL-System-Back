@@ -7,6 +7,7 @@ router.post('/mentor', (req,res,next)=>{
    
     const values = [     
      req.body.mentor_Id,
+     req.body.student_no,
      req.body.title,
      req.body.m_name,
      req.body.m_surname,

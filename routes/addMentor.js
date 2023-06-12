@@ -4,8 +4,6 @@ const conn = require('../config/db')
 const router = express.Router()
 
 
-
-
 let studNum;
 
 router.get('/studNum/:studentNo', (req, res, next) => {
@@ -26,29 +24,21 @@ function emailTemplate(data) {
 router.post('/sendEmail', (req, res, next) => {
     console.log(req.body)
   const transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
-    port: 587,
-    secure: false,
+    service: "hotmail",
     auth: {
       user: 'Workintergratedlearning@outlook.com',
       pass: "wil@2023"
     },
     
   });
-  /*var transporter = nodemailer.createTransport({
-    service: 'Outlook',
-    auth: {
-      user: 'e-Voting@outlook.com',
-      pass: '@eVoting2019'
-    }
-  });*/
 
-  const emailMessage = {
+
+  const options = {
     from: 'Workintergratedlearning@outlook.com',
     to: '216430646@tut4life.ac.za',
     subject: 'Query Results',
     text: this.student_no + ' invites you to be their mentor.',
-    html: emailTemplate({ results: req.body.queryResults }),
+    //html: emailTemplate({ results: req.body.queryResults }),
   };
 
   transporter.sendMail(emailMessage, (error, info) => {
@@ -63,25 +53,3 @@ router.post('/sendEmail', (req, res, next) => {
 });
 
 module.exports = router;
-
-
-
-
-
-/*router.post('/pass', (req, res, next) => {
-    const password = req.body.password;
-  
-    const values = [
-      password
-    ];
-  
-    let sql = `INSERT INTO student (password) VALUES (?)`;
-  
-    conn.query(sql, values, function(err, result) {
-      if (err) {
-        throw err;
-      }
-      console.log("Successfully inserted");
-      res.status(200).json({ 'Message': "Success" });
-    });
-  });*/
