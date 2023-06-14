@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({extend: false}));
-const studentRoute = require('./routes/sendEmail')
+const studentRoute = require('./routes/sendEmail2')
 
 
 conn.connect((err)=>{
