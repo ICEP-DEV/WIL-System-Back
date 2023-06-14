@@ -171,13 +171,21 @@ module.exports = {
     console.log(data);
     conn.query(
       //INSERT INTO `evaluation_criteria`( `student_no`, `wilCoord_id`, `evaluation_id`, `intern_criteria`) VALUES (218049799,2235,'Always');
-      `insert into evaluation_criteria(student_no, wilCoord_id, evaluation_id, intern_criteria) 
-                values(?,?,?,?)`,
+      `insert into evaluation_criteria(student_no, supervisorAssistance, supervisorInterest, supervisorTraining,
+        supervisorMotivation,supervisorInstruction,coworkerAssistance,coworkerInterest,coworkerTraining,coworkerMotivation,coworkerInstruction) 
+                values(?,?,?,?,?,?,?,?,?,?,?)`,
       [
         data.student_no,
-        data.wilCoord_id,
-        data.evaluation_id,
-        data.intern_criteria,
+        data.supervisorAssistance,
+        data.supervisorInterest,
+        data.supervisorTraining,
+        data.supervisorMotivation,
+        data.supervisorInstruction,
+        data.coworkerAssistance,
+        data.coworkerInterest,
+        data.coworkerTraining,
+        data.coworkerMotivation,
+        data.coworkerInstruction,
       ],
       (error, results, fields) => {
         if (error) {
