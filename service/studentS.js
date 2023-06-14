@@ -228,7 +228,7 @@ module.exports = {
     conn.query(
      // INSERT INTO `logbook`(`logbok_id`, `student_no`, `mentor_id`, `date`, `log_description`, `log_status`, `submitted_at`) 
     // VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]')
-    `INSERT INTO logbook(logbook_id, student_no, mentor_id, date, log_description,)  
+    `INSERT INTO logbook(logbook_id, student_no, mentor_id, date, log_description)  
      VALUES (?,?,?,?,?)`,
      [
       data.logbook_id,
