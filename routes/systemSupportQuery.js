@@ -10,7 +10,7 @@ router.post('/query', (req,res, next)=>{
      req.body.queryMessage,    
     ]
 
-    let sql = `INSERT INTO systemQuerys (query_Id, student_no, queryMessage) VALUES (?,?,?)`
+    let sql = `INSERT INTO systemquerys (query_Id, student_no, queryMessage) VALUES (?,?,?)`
 
     conn.query(sql, values, function(err, result){
         if(err)throw err;
