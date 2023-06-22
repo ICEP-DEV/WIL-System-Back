@@ -8,17 +8,11 @@ const secretOrKey = 'secretKey';
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
-router.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
+
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 router.post('/Login', function (req, res) {
-	const student_id = req.body.student_id;
-	const student_password = req.body.student_password;
-	if (student_id) {
+	
 		//Sending an email
 		var transporter = nodemailer.createTransport({
 			service: 'Outlook',
@@ -27,10 +21,7 @@ router.post('/Login', function (req, res) {
 				pass: 'wil@2023'
 			}
 		});
-		const OTPSent = randomstring.generate({
-			length: 4,
-			charset: 'numeric'
-		});
+
 		var mailOptions = {
 			from: 'Workintergratedlearning@outlook.com',
 		    to: '216430646@tut4life.ac.za',
@@ -50,7 +41,7 @@ router.post('/Login', function (req, res) {
 				})
 			}
 		})
-	}
+	
 });
 
 module.exports = router;

@@ -7,11 +7,11 @@ router.post('/forms', (req,res, next)=>{
    
     const values = [
      req.body.wilForm_Id,
-     req.body.studentNo,    
+     req.body.student_no,    
      req.body.approvedEmployer,
      req.body.contactPerson,
      req.body.telNumber,
-     req.body.email,
+     req.body.emp_email,
      req.body.physicalAddress,
      req.body.postalAddress,
      req.body.postalCode,
@@ -19,8 +19,8 @@ router.post('/forms', (req,res, next)=>{
      req.body.studyPeriod,
     ]
 
-    let sql = `INSERT INTO wilform (wilForm_Id, studentNo, approvedEmployer, contactPerson, telNumber,
-               email, physicalAddress, postalAddress, postalCode, city, studyPeriod) VALUES (?,?,?,?,?,?,?,?,?,?,?)`
+    let sql = `INSERT INTO wilform (wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber,
+        emp_email, physicalAddress, postalAddress, postalCode, city, studyPeriod) VALUES (?,?,?,?,?,?,?,?,?,?,?)`
 
     conn.query(sql, values, function(err, result){
         if(err)throw err;

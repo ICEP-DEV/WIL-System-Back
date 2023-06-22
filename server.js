@@ -9,7 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.urlencoded({extend: false}));
-const studentRoute = require('./routes/systemSupportQuery')
+const studentRoute = require('./routes/getWorkDivision')
+const employmentLetterUpload = require('./routes/employmentLetterUpload')
+const wilforms = require('./routes/getWilForm')
 
 
 conn.connect((err)=>{
@@ -18,5 +20,8 @@ conn.connect((err)=>{
 })
 
 app.use('/api', studentRoute)
+app.use('/api', employmentLetterUpload)
+app.use('/api', wilforms)
+
 
 app.listen(8080, ()=> console.log("server is running on port: " +8080));
