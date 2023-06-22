@@ -17,8 +17,10 @@ const upload = multer({
 });
 
 router.post('/upload', upload.single('pdfname'), (req, res) => {
-    const systemDoc = req.file.filename;
-    conn.query('INSERT INTO student SET ?', { systemDoc: systemDoc }, (error, results) => {
+    console.log(req.file)
+    res.json
+    //const systemDoc = req.file.filename;
+    /*conn.query('UPDATE student SET systemDoc = ? WHERE student_no', [systemDoc ], (error, results) => {
         if (error) {
             console.log(error);
         } else {
@@ -29,7 +31,7 @@ router.post('/upload', upload.single('pdfname'), (req, res) => {
                 message: "file uploaded"
             });
         }
-    });
+    });*/
 });
 
 module.exports = router;

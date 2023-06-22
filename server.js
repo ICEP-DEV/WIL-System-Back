@@ -10,9 +10,12 @@ app.use(express.json());
 
 app.use(express.urlencoded({extend: false}));
 const studentRoute = require('./routes/getWorkDivision')
-const employmentLetterUpload = require('./routes/employmentLetterUpload')
 const wilforms = require('./routes/getWilForm')
-
+const sysDocUpload = require('./routes/sysDocUpload')
+const getWorkDivision = require('./routes/getWorkDivision')
+const getStudInfo = require('./routes/getStudInfo')
+const getMentorDetails = require('./routes/getMentorDetails')
+const getNameSurStud = require('./routes/getNameSurStud')
 
 conn.connect((err)=>{
     if(err) throw err;
@@ -20,8 +23,15 @@ conn.connect((err)=>{
 })
 
 app.use('/api', studentRoute)
-app.use('/api', employmentLetterUpload)
+app.use('/api', sysDocUpload)
 app.use('/api', wilforms)
+app.use('/api', getWorkDivision)
+app.use('/api', getStudInfo)
+app.use('/api', getMentorDetails)
+app.use('/api', getNameSurStud)
+
+
+
 
 
 app.listen(8080, ()=> console.log("server is running on port: " +8080));
