@@ -16,6 +16,9 @@ const getWorkDivision = require('./routes/getWorkDivision')
 const getStudInfo = require('./routes/getStudInfo')
 const getMentorDetails = require('./routes/getMentorDetails')
 const getNameSurStud = require('./routes/getNameSurStud')
+const getUserStudNum = require('./routes/getUserStudNum')
+const employmentLetterUpload = require('./routes/employmentLetterUpload')
+const getEmpLet = require('./routes/getEmpLet')
 
 conn.connect((err)=>{
     if(err) throw err;
@@ -29,6 +32,11 @@ app.use('/api', getWorkDivision)
 app.use('/api', getStudInfo)
 app.use('/api', getMentorDetails)
 app.use('/api', getNameSurStud)
+app.use('/api', getUserStudNum)
+app.use('/api', employmentLetterUpload)
+app.use('/api', getEmpLet)
+
+
 
 
 

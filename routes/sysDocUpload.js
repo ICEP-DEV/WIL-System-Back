@@ -4,34 +4,32 @@ const express = require("express");
 const multer = require("multer");
 const router = express.Router();
 
+let studNum;
+
 const storage = multer.diskStorage({
-    destination: 'sysDocFiles/',
-    filename: (req, file, cb) => {
-        // return cb(null, '${file.filename}_${Date,now()}${path.extname(file.originalname)}')
-        return cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    }
+  destination: 'sysDocFiles/',
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+  }
 });
 
 const upload = multer({
-    storage: storage
+  storage: storage
 });
 
-router.post('/upload', upload.single('pdfname'), (req, res) => {
-    console.log(req.file)
-    res.json
-    //const systemDoc = req.file.filename;
-    /*conn.query('UPDATE student SET systemDoc = ? WHERE student_no', [systemDoc ], (error, results) => {
-        if (error) {
-            console.log(error);
-        } else {
-            let pdfFK = results.insertId;
-
-            res.json({
-                success: 1,
-                message: "file uploaded"
-            });
-        }
-    });*/
+router.post('/uploadSysDoc/:studentNo', upload.single('pdfname'), (req, res) => {
+  studNum = req.params.studentNo;
+  const systemDoc = req.file.filename;
+  const sql = 'UPDATE student SET systemDoc = ? WHERE student_no = ?';
+  conn.query(sql, [systemDoc, studNum], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ success: 0, message: "Error occurred while updating student information" });
+    } else {
+      res.status(200).json({ success: 1, message: "File uploaded and student information updated successfully" });
+    }
+  });
 });
 
 module.exports = router;
+
