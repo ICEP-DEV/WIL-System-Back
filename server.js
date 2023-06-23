@@ -4,6 +4,7 @@ const conn = require('./config/db')
 const studentRoute = require('./routes/students')
 const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
+const adminRoute = require('./routes/admin')
 const app = express();
 const multer = require('multer');
 
@@ -28,7 +29,8 @@ conn.connect((err)=>{
 
 app.use('/api', studentRoute);
 app.use('/api', wilRoute);
-app.use('/api', mentorRoute)
+app.use('/api', mentorRoute);
+app.use('/api', adminRoute)
 
 
 
