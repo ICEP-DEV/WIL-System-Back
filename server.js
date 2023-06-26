@@ -8,14 +8,21 @@ const adminRoute = require('./routes/admin')
 const app = express();
 const multer = require('multer');
 
+conn.connect((err)=>{
+    if(err) throw err;
+    console.log("Db is connected successfully: ", conn.threadId);
+})
+
 const corsOptions = {
     origin: '*'
 }
 
+
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extend: false}));
-const studentRoute = require('./routes/getWorkDivision')
+const workDivision = require('./routes/getWorkDivision')
 const wilforms = require('./routes/getWilForm')
 const sysDocUpload = require('./routes/sysDocUpload')
 const getWorkDivision = require('./routes/getWorkDivision')
@@ -29,13 +36,16 @@ const getSupEvaluation = require('./routes/getSupEvaluation')
 const getCoWorkerEvaluation = require('./routes/getCoWorkerEvaluation')
 const getReAdInfo = require('./routes/getReAdInfo')
 const declaration = require('./routes/declaration')
+const getSysDoc = require('./routes/getSysDoc')
 
-conn.connect((err)=>{
-    if(err) throw err;
-    console.log("Db is connected successfully: ", conn.threadId);
-})
+
+
 
 app.use('/api', studentRoute)
+app.use('/api', wilRoute)
+app.use('/api', mentorRoute)
+app.use('/api', adminRoute)
+app.use('/api', workDivision)
 app.use('/api', sysDocUpload)
 app.use('/api', wilforms)
 app.use('/api', getWorkDivision)
@@ -49,14 +59,9 @@ app.use('/api', getSupEvaluation)
 app.use('/api', getCoWorkerEvaluation)
 app.use('/api', getReAdInfo)
 app.use('/api', declaration)
+app.use('/api', getSysDoc)
 
 
-
-
-app.use('/api', studentRoute);
-app.use('/api', wilRoute);
-app.use('/api', mentorRoute);
-app.use('/api', adminRoute)
 
 
 

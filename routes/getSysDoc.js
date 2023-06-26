@@ -4,7 +4,7 @@ const router = express.Router();
 
 let studNum;
 
-router.get('/studNum/:studentNo', (req, res, next) => {
+router.get('/getSysDoc/:studentNo', (req, res, next) => {
   studNum = req.params.studentNo;
   next();
 });
