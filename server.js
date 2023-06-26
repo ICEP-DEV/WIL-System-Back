@@ -19,6 +19,10 @@ const getNameSurStud = require('./routes/getNameSurStud')
 const getUserStudNum = require('./routes/getUserStudNum')
 const employmentLetterUpload = require('./routes/employmentLetterUpload')
 const getEmpLet = require('./routes/getEmpLet')
+const getSupEvaluation = require('./routes/getSupEvaluation')
+const getCoWorkerEvaluation = require('./routes/getCoWorkerEvaluation')
+const getReAdInfo = require('./routes/getReAdInfo')
+const declaration = require('./routes/declaration')
 
 conn.connect((err)=>{
     if(err) throw err;
@@ -35,6 +39,10 @@ app.use('/api', getNameSurStud)
 app.use('/api', getUserStudNum)
 app.use('/api', employmentLetterUpload)
 app.use('/api', getEmpLet)
+app.use('/api', getSupEvaluation)
+app.use('/api', getCoWorkerEvaluation)
+app.use('/api', getReAdInfo)
+app.use('/api', declaration)
 
 
 
