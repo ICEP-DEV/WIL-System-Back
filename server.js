@@ -1,13 +1,19 @@
 const express = require('express')
 const cors = require('cors')
 const conn = require('./config/db')
-const app = express();app.use(express.json())
+const studentRoute = require('./routes/students')
+const wilRoute = require('./routes/coordinator')
+const mentorRoute = require('./routes/mentorR')
+const adminRoute = require('./routes/admin')
+const app = express();
+const multer = require('multer');
 
+const corsOptions = {
+    origin: '*'
+}
 
-app.use(cors());
-
+app.use(cors(corsOptions));
 app.use(express.json());
-
 app.use(express.urlencoded({extend: false}));
 const studentRoute = require('./routes/getWorkDivision')
 const wilforms = require('./routes/getWilForm')
@@ -47,6 +53,10 @@ app.use('/api', declaration)
 
 
 
+app.use('/api', studentRoute);
+app.use('/api', wilRoute);
+app.use('/api', mentorRoute);
+app.use('/api', adminRoute)
 
 
 
