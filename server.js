@@ -37,7 +37,7 @@ const getCoWorkerEvaluation = require('./routes/getCoWorkerEvaluation')
 const getReAdInfo = require('./routes/getReAdInfo')
 const declaration = require('./routes/declaration')
 const getSysDoc = require('./routes/getSysDoc')
-
+const submissionStatus = require('./routes/submissionStatus')
 
 
 
@@ -60,6 +60,8 @@ app.use('/api', getCoWorkerEvaluation)
 app.use('/api', getReAdInfo)
 app.use('/api', declaration)
 app.use('/api', getSysDoc)
+app.use('/api', submissionStatus)
+
 
 
 
