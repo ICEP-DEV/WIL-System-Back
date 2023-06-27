@@ -18,8 +18,7 @@ router.post('/query', (req,res, next)=>{
     })
 
     res.status(200).json({'Message' :"Success"});
-})
-
+});
 
 
 module.exports = router;
