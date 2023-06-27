@@ -310,8 +310,9 @@ uploadPlacementLetter: (data, callBack) => {
   
  console.log('data',data);
   conn.query(
-    `INSERT INTO placementLetter(fileName,path) VALUES (?,?)`,
+    `INSERT INTO placementLetter(student_no,fileName,path) VALUES (?,?,?)`,
   [
+    data.student_no,
   data.fileName,
   data.path
   ],

@@ -35,6 +35,39 @@ getStudInfoById: (student_no, callBack) => {
     );
   },
 
+  getPlacementLetter: (student_no, fileName, callBack) => {
+    conn.query(
+      `SELECT path FROM placementLetter WHERE student_no = ? AND fileName = ?`,
+      [student_no, fileName],
+      (error, results, fields) => {
+        if (error) {
+          callBack(error);
+        } else {
+          if (results.length > 0) {
+            const filePath = results[0].path;
+            callBack(null, filePath);
+          } else {
+            callBack(null, null); // No matching record found
+          }
+        }
+      }
+    );
+  },
+  ////////////////////////////////////////////////////
+getStudentById: (student_no, callBack)=>{
+ 
+conn.query(
+  `SELECT student_no,fileName,path FROM placementLetter WHERE student_no = ? `,
+  [student_no],
+  (error, results) => {
+    if (error) {
+      callBack(error);
+    }
+    console.log(results);
+    return callBack(null, results);
+  }
+)
+}
 
 
 }
