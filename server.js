@@ -38,7 +38,7 @@ const getReAdInfo = require('./routes/getReAdInfo')
 const declaration = require('./routes/declaration')
 const getSysDoc = require('./routes/getSysDoc')
 const submissionStatus = require('./routes/submissionStatus')
-
+const inviteMentor = require('./routes/inviteMentor')
 
 
 app.use('/api', studentRoute)
@@ -61,7 +61,7 @@ app.use('/api', getReAdInfo)
 app.use('/api', declaration)
 app.use('/api', getSysDoc)
 app.use('/api', submissionStatus)
-
+app.use('/api', inviteMentor)
 
 
 
