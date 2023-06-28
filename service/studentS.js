@@ -203,13 +203,12 @@ module.exports = {
   submitReport: (data, callBack) => {
     console.log(data);
     conn.query(
-       //INSERT INTO `report`(`report_id`, `student_no`, `wilCoord_id`, `report_doc`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]')
-      `insert into report(report_id,student_no, wilCoord_id, report_doc) 
+       //INSERT INTO `report`(`report_id`, `student_no`, `report_doc`) VALUES ('[value-1]','[value-2]','[value-3]')
+      `insert into report(report_id,student_no, report_doc) 
                 values(?,?,?,?)`,
       [
         data.report_id,
         data.student_no,
-        data.wilCoord_id,
         data.report_doc,
       
       ],
