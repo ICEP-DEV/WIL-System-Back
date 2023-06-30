@@ -201,7 +201,7 @@ module.exports = {
   ////////////////////////////////////STUDENT REPORT///////////////////////////////////////////
 
   submitReport: (data, callBack) => {
-    console.log(data);
+    // console.log(data);
     conn.query(
        //INSERT INTO `report`(`report_id`, `student_no`, `report_doc`) VALUES ('[value-1]','[value-2]','[value-3]')
       `insert into report(report_id,student_no, report_doc) 
@@ -363,7 +363,7 @@ uploadPlacementLetter: (data, callBack) => {
 
   uploadSysDoc: (data, callBack) => {
   
-    console.log('Service',data);
+    // console.log('Service',data);
      conn.query(
        `INSERT INTO systemDocumentaion(sFileName,sPath) VALUES (?,?)`,
      [

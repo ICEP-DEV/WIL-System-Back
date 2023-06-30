@@ -338,7 +338,7 @@ module.exports = {
       fileName: filebody,
       path: filePath,
     };
-    console.log("file path", data);
+    // console.log("file path", data);
 
     uploadPlacementLetter(data, (err, results) => {
       if (!req.file) {
@@ -372,7 +372,7 @@ module.exports = {
     fileName: filebody,
     path: filePath,
   };
-  console.log("file path", data);
+  // console.log("file path", data);
 
   uploadSysDoc(data, (err, results) => {
     if (!req.file) {

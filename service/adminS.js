@@ -34,7 +34,7 @@ getStudInfoById: (student_no, callBack) => {
       }
     );
   },
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   getPlacementLetter: (student_no, fileName, callBack) => {
     conn.query(
       `SELECT path FROM placementLetter WHERE student_no = ? AND fileName = ?`,
@@ -67,7 +67,21 @@ conn.query(
     return callBack(null, results);
   }
 )
+},
+////////////////////////////////
+getformById: (student_no, callback)=>{
+conn.query(
+  `SELECT * FROM admissionform WHERE student_no = ?`,
+[student_no],
+(error, results) => {
+  if(error){
+    callback(error);
+  }
+  console.log(results);
+  return callback(null, results)
 }
 
+)
+},
 
 }
