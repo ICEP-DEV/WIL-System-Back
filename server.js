@@ -36,6 +36,9 @@ const declaration = require('./routes/declaration')
 const getSysDoc = require('./routes/getSysDoc')
 const submissionStatus = require('./routes/submissionStatus')
 const inviteMentor = require('./routes/inviteMentor')
+const updateMonthlyStatus = require('./routes/updateMonthlyStatus')
+const getMonthlyStatus = require('./routes/getMonthlyStatus')
+const getMantees = require('./routes/getMantees')
 
 
 app.use('/api', studentRoute)
@@ -56,7 +59,9 @@ app.use('/api', declaration)
 app.use('/api', getSysDoc)
 app.use('/api', submissionStatus)
 app.use('/api', inviteMentor)
-
+app.use('/api', updateMonthlyStatus)
+app.use('/api', getMonthlyStatus)
+app.use('/api', getMantees)
 
 
 

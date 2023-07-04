@@ -7,7 +7,6 @@ router.use(bodyParser.json());
 
 router.post('/inviteMentor', (req, res, next) => {
   const values = [
-    req.body.mentor_Id,
     req.body.student_no,
     req.body.title,
     req.body.m_name,
@@ -16,7 +15,7 @@ router.post('/inviteMentor', (req, res, next) => {
     req.body.mobileNo,
   ];
 
-  const sql = `INSERT INTO mentor (mentor_Id, title, m_name, m_surname,
+  const sql = `INSERT INTO mentor ( student_no, title, m_name, m_surname,
       email_address, mobileNo) VALUES (?,?,?,?,?,?)`;
 
   conn.query(sql, values, function (err, result) {
@@ -31,7 +30,7 @@ router.post('/inviteMentor', (req, res, next) => {
     let month = current.getMonth() + 5;
 
     for (let i = 0; i < 6; i++) {
-      if (month > 12) {
+      if (month > 6) {
         month = 1;
       }
 
@@ -44,7 +43,7 @@ router.post('/inviteMentor', (req, res, next) => {
         req.body.approval,
       ];
 
-      const data = `INSERT INTO monthly_status (month_Id, student_no, month, status, approval) VALUES (?,?,?,'closed','yes')`;
+      const data = `INSERT INTO monthly_status (month_Id, student_no, month, status, approval) VALUES (?,?,?,'closed','no')`;
       conn.query(data, monthlyvalues, function (err, result) {
         if (err) {
           console.error(err);
