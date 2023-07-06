@@ -25,29 +25,37 @@ router.post('/inviteMentor', (req, res, next) => {
     }
 
     console.log('Successfully inserted');
+    console.log(result)
+
+    const data = `INSERT INTO logboook (logbook_id, date, log_description, submitted_at, student_no, month, status, approval) VALUES (?,?,?,)`;
 
     let current = new Date();
     let month = current.getMonth() + 5;
-
     for (let i = 0; i < 6; i++) {
       if (month > 6) {
         month = 1;
       }
 
 
+    
+
       const monthlyvalues = [
         null,
+        null,
+        '',
+        '',
         req.body.student_no,
         month,
-        req.body.status,
-        req.body.approval,
+        'closed',
+        null,
       ];
 
-      const data = `INSERT INTO monthly_status (month_Id, student_no, month, status, approval) VALUES (?,?,?,'closed','no')`;
-      conn.query(data, monthlyvalues, function (err, result) {
+      conn.query(data, monthlyvalues, function (err, row) {
         if (err) {
           console.error(err);
-          return res.status(500).json({ error: 'Failed to insert monthly status.' });
+
+          console.log(row)
+          //return res.status(500).json({ error: 'Failed to insert monthly status.' });
         }
       });
 
