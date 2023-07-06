@@ -102,5 +102,24 @@ getAppReject: (data, callBack)=>{
      }
   )
 },
-
+ ////////////////////////////////////////////////////
+ getAppApprove: (data, callBack)=>{
+  conn.query(
+    // INSERT INTO `application`(`app_id`, `student_no`, `comment`) VALUES ('[value-1]','[value-2]','[value-3]')
+    `INSERT INTO application(app_id,student_no,app_status, comment) VALUES (?,?,?,?)`,
+    [
+    data.app_id,
+    data.student_no,
+    data.app_status,
+    data.comment
+    ],
+  
+    (error, results, fields) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, results);
+     }
+  )
+},
 }

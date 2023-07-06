@@ -4,7 +4,8 @@ const {
     getPlacementLetter,
     getStudentById,
     getformById,
-    getAppReject
+    getAppReject,
+    getAppApprove,
   } = require("../service/adminS");
   
   module.exports = {
@@ -110,7 +111,7 @@ formById: (req, res) => {
   });
 },
 
-
+//////////////////////////////////////////////////////////////////////////////////////
 appReject: (req, res) => {
   const body = req.body;
   getAppReject(body, (err, rsults) => {
@@ -127,4 +128,24 @@ appReject: (req, res) => {
     });
   });
 },
+//////////////////////////////////////////////////////////////////////////////////////
+appApprove: (req, res) => {
+  const body = req.body;
+  getAppApprove(body, (err, rsults) => {
+    if (err) {
+      console.log(err);
+      return res.json({
+        success: 0,
+        message: err.message,
+      });
+    }
+    return res.json({
+      success: 1,
+      message: "Update successfully!",
+    });
+  });
+},
+
+
+
   }
