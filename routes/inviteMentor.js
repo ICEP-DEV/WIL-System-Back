@@ -27,7 +27,7 @@ router.post('/inviteMentor', (req, res, next) => {
     console.log('Successfully inserted');
     console.log(result)
 
-    const data = `INSERT INTO logboook (logbook_id, date, log_description, submitted_at, student_no, month, status, approval) VALUES (?,?,?,)`;
+    const data = `INSERT INTO logbook (logbook_id, date, log_description, submitted_at, student_no, month, status, approval) VALUES (?,?,?,?,?,?,?,?)`;
 
     let current = new Date();
     let month = current.getMonth() + 5;
@@ -41,13 +41,13 @@ router.post('/inviteMentor', (req, res, next) => {
 
       const monthlyvalues = [
         null,
-        null,
+        0,
         '',
         '',
         req.body.student_no,
         month,
         'closed',
-        null,
+        0,
       ];
 
       conn.query(data, monthlyvalues, function (err, row) {
