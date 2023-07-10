@@ -38,7 +38,7 @@ const submissionStatus = require('./routes/submissionStatus')
 const inviteMentor = require('./routes/inviteMentor')
 const updateMonthlyStatus = require('./routes/updateMonthlyStatus')
 const getMonthlyStatus = require('./routes/getMonthlyStatus')
-const getMantees = require('./routes/getMantees')
+const getMentees = require('./routes/getMentees')
 const getStudReport = require('./routes/getStudReport')
 
 
@@ -62,7 +62,7 @@ app.use('/api', submissionStatus)
 app.use('/api', inviteMentor)
 app.use('/api', updateMonthlyStatus)
 app.use('/api', getMonthlyStatus)
-app.use('/api', getMantees)
+app.use('/api', getMentees)
 app.use('/api', getStudReport)
 
 
