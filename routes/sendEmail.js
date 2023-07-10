@@ -1,44 +1,46 @@
 const express = require('express');
-const { response } = require('express');
-const nodemailer = require("nodemailer");
-const conn = require('../config/db');
-const router = express.Router();
+const nodemailer = require('nodemailer');
 
-function sendEmail() {
-  return new Promise((resolve, reject) => {
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
+const app = express();
+app.use(express.json());
+
+app.post('/send-email', (req, res) => {
+    const { from, to, subject, content } = req.body;
+  
+    const transporter = nodemailer.createTransport({
+      //service: 'YourEmailServiceProvider',
+      host: 'smtp.office365.com',
+        port: 587,
+        secure: false,
       auth: {
-        user: 'silence.tshifhinga.18@gmail.com',
-        pass: "kdiiimtfqvrjgcue"
+        user: '',
+        pass: ''
       }
     });
-
-    const mail_configs = {
-      from: 'silence.tshifhinga.18@gmail.com',
-      to: '216430646@tut4life.ac.za',
-      subject: 'Query Results',
-      text: 'invites you to be their mentor.'
+  
+    const mailOptions = {
+      from,
+      to,
+      subject,
+      text: content
     };
-
-    transporter.sendMail(mail_configs, function (error, info) {
+  
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error);
-        return reject({ message: `An error has occurred` });
+        console.log('Error sending email:', error);
+        res.status(500).json({ error: 'An error occurred while sending the email.' });
       } else {
-        return resolve({ message: "Email sent successfully" });
+        console.log('Email sent:', info.response);
+        res.json({ message: 'Email sent successfully.' });
       }
     });
   });
-}
+  
+  const port = 5000; // or any other port of your choice
 
-router.post('/send', (req, res) => {
-  sendEmail()
-    .then(response => res.send(response.message))
-    .catch(error => res.status(500).send(error.message));
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
-
-module.exports = router;
 
 
 /*            user: 'Workintergratedlearning@outlook.com',
