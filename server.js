@@ -41,7 +41,7 @@ const getMonthlyStatus = require('./routes/getMonthlyStatus')
 const getMentees = require('./routes/getMentees')
 const getStudReport = require('./routes/getStudReport')
 const submitUpdateLogbook = require('./routes/submitUpdateLogbook')
-
+const getMonthlyLogs = require('./routes/getMonthlyLogs')
 
 app.use('/api', studentRoute)
 app.use('/api', wilRoute)
@@ -66,6 +66,7 @@ app.use('/api', getMonthlyStatus)
 app.use('/api', getMentees)
 app.use('/api', getStudReport)
 app.use('/api', submitUpdateLogbook)
+app.use('/api', getMonthlyLogs)
 
 
 
