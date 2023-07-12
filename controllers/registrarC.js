@@ -6,7 +6,7 @@ const {
     getformById,
     getAppReject,
     getAppApprove,
-  } = require("../service/adminS");
+  } = require("../service/registrarS");
   
   module.exports = {
 
@@ -23,7 +23,7 @@ getStudInformation:(req, res) => {
     });
   },
 
-
+  
   StudInfoById:(req, res) => {
     const student_no = req.params.student_no
     // console.log(student_no);
@@ -113,39 +113,37 @@ formById: (req, res) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 appReject: (req, res) => {
-  const body = req.body;
-  getAppReject(body, (err, rsults) => {
-    if (err) {
-      console.log(err);
+    const body = req.body;
+    getAppReject(body, (err, rsults) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: err.message,
+        });
+      }
       return res.json({
-        success: 0,
-        message: err.message,
+        success: 1,
+        message: "Update successfully!",
       });
-    }
-    return res.json({
-      success: 1,
-      message: "Update successfully!",
     });
-  });
-},
-//////////////////////////////////////////////////////////////////////////////////////
-appApprove: (req, res) => {
-  const body = req.body;
-  getAppApprove(body, (err, rsults) => {
-    if (err) {
-      console.log(err);
+  },
+  //////////////////////////////////////////////////////////////////////////////////////
+  appApprove: (req, res) => {
+    const body = req.body;
+    getAppApprove(body, (err, rsults) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: 0,
+          message: err.message,
+        });
+      }
       return res.json({
-        success: 0,
-        message: err.message,
+        success: 1,
+        message: "Update successfully!",
       });
-    }
-    return res.json({
-      success: 1,
-      message: "Update successfully!",
     });
-  });
-},
-
-
-
-  }
+  },
+  
+}

@@ -328,15 +328,17 @@ module.exports = {
 
   uploadPlacementLetters: (req, res) => {
     const body = req.body;
-    // console.log(' body',req.body);
+  // console.log(' body',req.body);
     // console.log('file', req.file);
     const filePath = req.file.path;
     const filebody = req.file.originalname;
+   
     const data = {
+      student_no: body.student_no,
       fileName: filebody,
       path: filePath,
     };
-    console.log("file path", data);
+    // console.log("file path", data);
 
     uploadPlacementLetter(data, (err, results) => {
       if (!req.file) {
@@ -370,7 +372,7 @@ module.exports = {
     fileName: filebody,
     path: filePath,
   };
-  console.log("file path", data);
+  // console.log("file path", data);
 
   uploadSysDoc(data, (err, results) => {
     if (!req.file) {

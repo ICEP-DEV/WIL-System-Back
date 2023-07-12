@@ -1,10 +1,11 @@
 const conn = require("../config/db");
 module.exports = {
+
   getStudInfo: (callBack) => {
     conn.query(
       `SELECT A.initials, A.surname, A.student_no, B.approvedEmployer, B.contactPerson, B.telNumber,
         B.emp_email, B.city, B.postalAddress, B.studyPeriod, B.applicationStatus FROM student A, wilform B 
-        WHERE A.student_no = B.student_no AND B.applicationStatus = 'Pending'`,
+        WHERE A.student_no = B.student_no AND B.applicationStatus = 'Accepted' AND B.reg_app_status = 'Pending'`,
 
       [],
       (error, results, fields) => {
@@ -79,13 +80,13 @@ module.exports = {
         return callback(null, results);
       }
     );
-  },
-  ////////////////////////////////////////////////////
+  }, 
+
   getAppReject: (data, callBack) => {
     conn.query(
       // INSERT INTO `application`(`app_id`, `student_no`, `comment`) VALUES ('[value-1]','[value-2]','[value-3]')
-      `INSERT INTO application(app_id,student_no,comment) VALUES (?,?,?)`,
-      [data.app_id, data.student_no, data.comment],
+      `INSERT INTO applicationReg(appReg_id,student_no,appReg_status,reg_comment) VALUES (?,?,?,?)`,
+      [data.appReg_id, data.student_no, data.appReg_status, data.reg_comment],
 
       (error, results, fields) => {
         if (error) {
@@ -98,15 +99,15 @@ module.exports = {
   ////////////////////////////////////////////////////
   getAppApprove: (data, callBack) => {
     conn.query(
-      `INSERT INTO application(app_id, student_no, app_status, comment) VALUES (?, ?, ?, ?)`,
-      [data.app_id, data.student_no, data.app_status, data.comment],
+      `INSERT INTO applicationReg(appReg_id, student_no, appReg_status, reg_comment) VALUES (?, ?, ?, ?)`,
+      [data.appReg_id, data.student_no, data.appReg_status, data.reg_comment],
       (error, results, fields) => {
         if (error) {
           callBack(error);
         } else {
-          if (data.app_status === "accepted") {
+          if (data.appReg_status === "accepted") {
             conn.query(
-              `UPDATE wilform SET applicationStatus = ? WHERE student_no = ?`,
+              `UPDATE wilform SET reg_app_status = ? WHERE student_no = ?`,
               ["Accepted", data.student_no],
               (error, results, fields) => {
                 if (error) {
@@ -123,4 +124,5 @@ module.exports = {
       }
     );
   },
-};
+  
+}

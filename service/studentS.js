@@ -201,7 +201,7 @@ module.exports = {
   ////////////////////////////////////STUDENT REPORT///////////////////////////////////////////
 
   submitReport: (data, callBack) => {
-    console.log(data);
+    // console.log(data);
     conn.query(
        //INSERT INTO `report`(`report_id`, `student_no`, `report_doc`) VALUES ('[value-1]','[value-2]','[value-3]')
       `insert into report(report_id,student_no, report_doc) 
@@ -278,8 +278,8 @@ module.exports = {
 
   willForm : (data, callBack) =>{
   conn.query(
-    `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, emp_email, physicalAddress, postalAddress, postalCode, city, studyPeriod)  
-     VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
+    `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, emp_email, physicalAddress, postalAddress, postalCode, city, studyPeriod, applicationStatus, reg_app_status)  
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
      [
       data.wilForm_Id,
       data.student_no,
@@ -292,6 +292,8 @@ module.exports = {
       data.postalCode,
       data.city,
       data.studyPeriod,
+      data.applicationStatus,
+      data.reg_app_status
 
      ],
      (error, results, fields) => {
@@ -309,8 +311,9 @@ uploadPlacementLetter: (data, callBack) => {
   
  console.log('data',data);
   conn.query(
-    `INSERT INTO placementLetter(fileName,path) VALUES (?,?)`,
+    `INSERT INTO placementLetter(student_no,fileName,path) VALUES (?,?,?)`,
   [
+    data.student_no,
   data.fileName,
   data.path
   ],
@@ -362,7 +365,7 @@ uploadPlacementLetter: (data, callBack) => {
 
   uploadSysDoc: (data, callBack) => {
   
-    console.log('Service',data);
+    // console.log('Service',data);
      conn.query(
        `INSERT INTO systemDocumentaion(sFileName,sPath) VALUES (?,?)`,
      [

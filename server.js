@@ -5,6 +5,7 @@ const studentRoute = require('./routes/students')
 const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
 const adminRoute = require('./routes/admin')
+const registrarRoute = require('./routes/registrarR')
 const app = express();
 const multer = require('multer');
 
@@ -21,14 +22,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({extend: false}));
+app.use(express.urlencoded({extended: false}));
+
 const workDivision = require('./routes/getWorkDivision')
+
 const sysDocUpload = require('./routes/sysDocUpload')
 const getWorkDivision = require('./routes/getWorkDivision')
 const getStudInfo = require('./routes/getStudInfo')
 const getMentorDetails = require('./routes/getMentorDetails')
 const getNameSurStud = require('./routes/getNameSurStud')
 const getUserStudNum = require('./routes/getUserStudNum')
+
 const getSupEvaluation = require('./routes/getSupEvaluation')
 const getCoWorkerEvaluation = require('./routes/getCoWorkerEvaluation')
 const getReAdInfo = require('./routes/getReAdInfo')
@@ -46,13 +50,17 @@ app.use('/api', studentRoute)
 app.use('/api', wilRoute)
 app.use('/api', mentorRoute)
 app.use('/api', adminRoute)
+app.use('/api', registrarRoute)
+
 app.use('/api', workDivision)
 app.use('/api', sysDocUpload)
+
 app.use('/api', getWorkDivision)
 app.use('/api', getStudInfo)
 app.use('/api', getMentorDetails)
 app.use('/api', getNameSurStud)
 app.use('/api', getUserStudNum)
+
 app.use('/api', getSupEvaluation)
 app.use('/api', getCoWorkerEvaluation)
 app.use('/api', getReAdInfo)
