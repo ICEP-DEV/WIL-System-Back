@@ -5,6 +5,7 @@ const studentRoute = require('./routes/students')
 const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
 const adminRoute = require('./routes/admin')
+const emailSender = require('./routes/sendEmail')
 const app = express();
 const multer = require('multer');
 
@@ -52,6 +53,7 @@ app.use('/api', getStudInfo)
 app.use('/api', getMentorDetails)
 app.use('/api', getNameSurStud)
 app.use('/api', getUserStudNum)
+app.use('/api', emailSender)
 
 app.use('/api', getSupEvaluation)
 app.use('/api', getCoWorkerEvaluation)

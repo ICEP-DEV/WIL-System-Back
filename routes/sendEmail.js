@@ -1,10 +1,12 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const conn = require('../config/db');
+const router = express.Router();
 
 const app = express();
-app.use(express.json());
+router.use(express.json());
 
-app.post('/send-email', (req, res) => {
+router.post('/send-email', (req, res) => {
     const { from, to, subject, content } = req.body;
   
     const transporter = nodemailer.createTransport({
@@ -42,6 +44,7 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+module.exports = router;
 
 /*            user: 'Workintergratedlearning@outlook.com',
             pass: "wil@2023"*/
