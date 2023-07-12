@@ -21,5 +21,4 @@ router.get("/admissionForm/:student_no",formById);
 router.post("/appReject",appReject);
 router.post("/appApprove",appApprove);
 
-
 module.exports = router;

@@ -5,6 +5,7 @@ const studentRoute = require('./routes/students')
 const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
 const adminRoute = require('./routes/admin')
+const registrarRoute = require('./routes/registrarR')
 const app = express();
 const multer = require('multer');
 
@@ -21,7 +22,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.urlencoded({extend: false}));
+app.use(express.urlencoded({extended: false}));
+
 const workDivision = require('./routes/getWorkDivision')
 
 const sysDocUpload = require('./routes/sysDocUpload')
@@ -44,6 +46,8 @@ app.use('/api', studentRoute)
 app.use('/api', wilRoute)
 app.use('/api', mentorRoute)
 app.use('/api', adminRoute)
+app.use('/api', registrarRoute)
+
 app.use('/api', workDivision)
 app.use('/api', sysDocUpload)
 
