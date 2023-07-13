@@ -279,7 +279,7 @@ module.exports = {
   willForm : (data, callBack) =>{
   conn.query(
     `INSERT INTO wilform(wilForm_Id, student_no, approvedEmployer, contactPerson, telNumber, emp_email, physicalAddress, postalAddress, postalCode, city, studyPeriod, applicationStatus, reg_app_status)  
-     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
      [
       data.wilForm_Id,
       data.student_no,
