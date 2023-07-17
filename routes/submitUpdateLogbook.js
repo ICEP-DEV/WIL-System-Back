@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const conn = require('../config/db');
 const router = express.Router();
 
-router.post('/logbook', (req, res, next) => {
+router.post('/subLogbook', (req, res, next) => {
   const studentNo = req.body.student_no;
   const date = req.body.date;
   const logDescription = req.body.log_description;
@@ -20,7 +20,7 @@ router.post('/logbook', (req, res, next) => {
 
     // Update the logbook status for the specified month
     const updateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
-    conn.query(updateQuery, ['submitted', studentNo, date.getMonth() + 1], function (err, result) {
+    conn.query(updateQuery, ['submitted', studentNo, date.getMonth() + 1],   function (err, result) {
       if (err) {
         console.error(err);
         return res.status(500).json({ error: 'Failed to update monthly status.' });
