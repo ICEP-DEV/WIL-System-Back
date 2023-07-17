@@ -47,7 +47,7 @@ router.post('/inviteMentor', (req, res, next) => {
         req.body.student_no,
         month,
         'closed',
-        0,
+        'inProgress'
       ];
 
       conn.query(data, monthlyvalues, function (err, row) {
@@ -67,3 +67,14 @@ router.post('/inviteMentor', (req, res, next) => {
 });
 
 module.exports = router;
+
+/* 
+{
+    "student_no":"218012345",
+    "title":"Miss", 
+    "m_name":"Ayanda", 
+    "m_surname":"Mlimo",
+    "email_address":"am@gmail.com", 
+    "mobileNo":"0124578963"
+} 
+*/

@@ -3,10 +3,11 @@ const conn = require('../config/db');
 const router = express.Router();
 
 
-router.get('/getSupInfo', (req, res, next) => {
+router.get('/getSupInfo/:student_no', (req, res, next) => {
+  const studNum = req.params.student_no;
   let sql = `SELECT supervisorAssistance, supervisorInterest, supervisorTraining, supervisorMotivation
   supervisorInstruction FROM evaluation_criteria`;
-  conn.query(sql, (err, result) => {
+  conn.query(sql, [studNum], (err, result) => {
     if (err) throw err;
     res.status(200).json({ result });
   });
