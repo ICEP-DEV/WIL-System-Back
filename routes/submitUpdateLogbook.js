@@ -1,46 +1,9 @@
-/*const express = require('express');
-const conn = require('../config/db');
-const router = express.Router();
-
-router.post('/subLogbook', (req, res, next) => {
-  const studentNo = req.body.student_no;
-  const date = req.body.date;
-  const logDescription = req.body.log_description;
-  const submittedAt = req.body.submitted_at;
-
-var tempdate = new Date()
-
-
-  // Insert a new logbook entry
-  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ?`;
-  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt], function (err, result) {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Failed to insert logbook entry.' });
-    }
-    console.log('Successfully inserted logbook entry');
-
-    // Update the logbook status for the specified month
-    const updateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
-    conn.query(updateQuery, ['submitted', studentNo, tempdate.getMonth() + 1],   function (err, result) {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Failed to update monthly status.' });
-      }
-      console.log('Successfully updated monthly status');
-      res.status(200).json({ 'Message': 'Success' });
-    });
-  });
-});
-
-module.exports = router;*/
-
-
 const express = require('express');
 const conn = require('../config/db');
 const router = express.Router();
 
-router.post('/subLogbook', (req, res, next) => {
+router.post('/subLogbook/:month', (req, res, next) => {
+  const logMonth = req.params.month; 
   const studentNo = req.body.student_no;
   const date = req.body.date;
   const logDescription = req.body.log_description;
@@ -50,8 +13,8 @@ router.post('/subLogbook', (req, res, next) => {
   const currentMonth = currentDate.getMonth() + 1;
 
   // Insert a new logbook entry
-  const insertQuery = `INSERT INTO logbook (student_no, date, log_description, submitted_at) VALUES (?, ?, ?, ?)`;
-  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt], function (err, result) {
+  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at =? WHERE month = ? `;
+  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt, logMonth], function (err, result) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to insert logbook entry.' });
@@ -94,25 +57,6 @@ module.exports = router;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* 
 {
     "student_no":"212233445", 
@@ -121,3 +65,43 @@ module.exports = router;
     "submitted_at":""
 } 
 */
+
+
+
+
+/*const express = require('express');
+const conn = require('../config/db');
+const router = express.Router();
+
+router.post('/subLogbook', (req, res, next) => {
+  const studentNo = req.body.student_no;
+  const date = req.body.date;
+  const logDescription = req.body.log_description;
+  const submittedAt = req.body.submitted_at;
+
+var tempdate = new Date()
+
+
+  // Insert a new logbook entry
+  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ?`;
+  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt], function (err, result) {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Failed to insert logbook entry.' });
+    }
+    console.log('Successfully inserted logbook entry');
+
+    // Update the logbook status for the specified month
+    const updateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
+    conn.query(updateQuery, ['submitted', studentNo, tempdate.getMonth() + 1],   function (err, result) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Failed to update monthly status.' });
+      }
+      console.log('Successfully updated monthly status');
+      res.status(200).json({ 'Message': 'Success' });
+    });
+  });
+});
+
+module.exports = router;*/

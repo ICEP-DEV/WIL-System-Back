@@ -32,7 +32,7 @@ router.post('/inviteMentor', (req, res, next) => {
     let current = new Date();
     let month = current.getMonth() + 5;
     for (let i = 0; i < 6; i++) {
-      if (month > 6) {
+      if (month > 12) {
         month = 1;
       }
 
