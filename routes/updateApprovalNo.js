@@ -3,7 +3,7 @@ const conn = require('../config/db');
 const router = express.Router();
 
 
-router.post('/updateYes/:studentNo', (req, res, next) => {
+router.post('/updateApprovalNo/:studentNo', (req, res, next) => {
   const studNum = req.params.studentNo;
   const logmonth = req.body.month;
   let sql = `UPDATE logbook SET approval = 'No' WHERE student_no = ? AND month = ?`;
