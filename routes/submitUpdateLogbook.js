@@ -13,16 +13,16 @@ router.post('/subLogbook/:month', (req, res, next) => {
   const currentMonth = currentDate.getMonth() + 1;
 
   // Insert a new logbook entry
-  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at =? WHERE month = ? `;
-  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt, logMonth], function (err, result) {
+  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ? WHERE month = ? AND student_no = ?`;
+  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt, logMonth, studentNo], function (err, result) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to insert logbook entry.' });
     }
     console.log('Successfully inserted logbook entry');
 
-    // Update the logbook status for the specified month
-    const updateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
+    // Update the logbook status for the specified month and student
+    const updateQuery = `UPDATE logbook SET status = ?, approval = 'pending' WHERE student_no = ? AND month = ?`;
     conn.query(updateQuery, ['submitted', studentNo, currentMonth], function (err, result) {
       if (err) {
         console.error(err);
@@ -31,10 +31,10 @@ router.post('/subLogbook/:month', (req, res, next) => {
       console.log('Successfully updated monthly status');
 
       if (currentMonth !== 12) {
-        // Wait for the next month and update the status to 'open'
+        // Wait for the next month and update the status to 'open' for the next month and student
         const nextMonth = currentMonth + 1;
         setTimeout(() => {
-          const nextUpdateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
+          const nextUpdateQuery = `UPDATE logbook SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
           conn.query(nextUpdateQuery, ['open', studentNo, nextMonth], function (err, result) {
             if (err) {
               console.error(err);
@@ -54,9 +54,6 @@ router.post('/subLogbook/:month', (req, res, next) => {
 
 module.exports = router;
 
-
-
-
 /* 
 {
     "student_no":"212233445", 
@@ -65,43 +62,3 @@ module.exports = router;
     "submitted_at":""
 } 
 */
-
-
-
-
-/*const express = require('express');
-const conn = require('../config/db');
-const router = express.Router();
-
-router.post('/subLogbook', (req, res, next) => {
-  const studentNo = req.body.student_no;
-  const date = req.body.date;
-  const logDescription = req.body.log_description;
-  const submittedAt = req.body.submitted_at;
-
-var tempdate = new Date()
-
-
-  // Insert a new logbook entry
-  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ?`;
-  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt], function (err, result) {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Failed to insert logbook entry.' });
-    }
-    console.log('Successfully inserted logbook entry');
-
-    // Update the logbook status for the specified month
-    const updateQuery = `UPDATE monthly_status SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
-    conn.query(updateQuery, ['submitted', studentNo, tempdate.getMonth() + 1],   function (err, result) {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Failed to update monthly status.' });
-      }
-      console.log('Successfully updated monthly status');
-      res.status(200).json({ 'Message': 'Success' });
-    });
-  });
-});
-
-module.exports = router;*/

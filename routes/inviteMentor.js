@@ -15,58 +15,59 @@ router.post('/inviteMentor', (req, res, next) => {
     req.body.mobileNo,
   ];
 
-  const sql = `INSERT INTO mentor ( student_no, title, m_name, m_surname,
-      email_address, mobileNo) VALUES (?,?,?,?,?,?)`;
+  const mentorSql = `INSERT INTO mentor (student_no, title, m_name, m_surname, email_address, mobileNo) VALUES (?,?,?,?,?,?)`;
 
-  conn.query(sql, values, function (err, result) {
+  conn.query(mentorSql, values, function (err, mentorResult) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to insert mentor.' });
     }
 
-    console.log('Successfully inserted');
-    console.log(result)
+    console.log('Successfully inserted mentor');
+    console.log(mentorResult);
 
-    const data = `INSERT INTO logbook (logbook_id, date, log_description, submitted_at, student_no, month, status, approval) VALUES (?,?,?,?,?,?,?,?)`;
+    const logbookSql = `INSERT INTO logbook (logbook_id, date, log_description, submitted_at, student_no, month, status, approval) VALUES ?`;
 
     let current = new Date();
-    let month = current.getMonth() + 5;
+    let month = current.getMonth() + 1;
+    const logbookValues = [];
+
     for (let i = 0; i < 6; i++) {
       if (month > 12) {
         month = 1;
       }
 
-
-    
-
-      const monthlyvalues = [
+      const monthlyValues = [
         null,
-        0,
+        '',
         '',
         '',
         req.body.student_no,
         month,
         'closed',
-        'inProgress'
+        'inProgress',
       ];
 
-      conn.query(data, monthlyvalues, function (err, row) {
-        if (err) {
-          console.error(err);
-
-          console.log(row)
-          //return res.status(500).json({ error: 'Failed to insert monthly status.' });
-        }
-      });
-
+      logbookValues.push(monthlyValues);
       month++;
     }
 
-    res.status(200).json({ message: 'Success' });
+    conn.query(logbookSql, [logbookValues], function (err, logbookResult) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Failed to insert monthly status.' });
+      }
+
+      console.log('Successfully inserted monthly status');
+      console.log(logbookResult);
+
+      res.status(200).json({ message: 'Success' });
+    });
   });
 });
 
 module.exports = router;
+
 
 /* 
 {
