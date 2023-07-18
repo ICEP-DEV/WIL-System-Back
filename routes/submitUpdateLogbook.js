@@ -14,7 +14,7 @@ router.post('/subLogbook/:month', (req, res, next) => {
 
   // Insert a new logbook entry
   const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ? WHERE month = ? AND student_no = ?`;
-  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt, logMonth, studentNo], function (err, result) {
+  conn.query(insertQuery, [studentNo, date, logDescription, submittedAt, logMonth], function (err, result) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to insert logbook entry.' });
