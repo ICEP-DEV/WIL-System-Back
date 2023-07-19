@@ -62,7 +62,7 @@ const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
 
 const app = express();
-app.use(express.json());
+router.use(express.json());
 
 // Define your email template using Handlebars
 const emailTemplate = handlebars.compile(`
@@ -84,23 +84,23 @@ async function getQueryResults() {
 }
 const queryResults = await getQueryResults();
 
-app.post('/send-email', (req, res) => {
-    const { from, to, subject, content } = req.body;  
+router.post('/send-emailNoti', (req, res) => {
+    const { from, to, subject } = req.body;  
     const transporter = nodemailer.createTransport({
-      //service: 'YourEmailServiceProvider',
+      service: 'Microsoft',
       host: 'smtp.office365.com',
         port: 587,
         secure: false,
       auth: {
-        user: '',
-        pass: ''
+        user: '214735946@tut4life.ac.za',
+        pass: 'Santiago8**'
       }
     });
   
     const mailOptions = {
       from: '',
       to: '',
-      subject: '',
+      subject: 'Registration Application',
       html: emailTemplate({ results: queryResults })
     };
   
@@ -115,8 +115,10 @@ app.post('/send-email', (req, res) => {
     });
   });
   
-  const port = 5000; // or any other port of your choice
+  /* const port = 5050; // or any other port of your choice
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+  console.log(`Server running on port ${port}`); 
+});*/
+
+module.exports = router;

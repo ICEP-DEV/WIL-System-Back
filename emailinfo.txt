@@ -1,6 +1,5 @@
 {
   "from": "sender-email@example.com",
   "to": "recipient-email@example.com",
-  "subject": "Test Email",
-  "content": "This is a test email sent using the Express API and Nodemailer."
+  "subject": "Registration Application",
 }

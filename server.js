@@ -6,6 +6,7 @@ const wilRoute = require('./routes/coordinator')
 const mentorRoute = require('./routes/mentorR')
 const adminRoute = require('./routes/admin')
 const emailSender = require('./routes/sendEmail')
+const studEmailNotification = require('./routes/studEmailNotification')
 const app = express();
 const multer = require('multer');
 
@@ -54,6 +55,7 @@ app.use('/api', getMentorDetails)
 app.use('/api', getNameSurStud)
 app.use('/api', getUserStudNum)
 app.use('/api', emailSender)
+app.use('/api', studEmailNotification)
 
 app.use('/api', getSupEvaluation)
 app.use('/api', getCoWorkerEvaluation)
@@ -62,9 +64,6 @@ app.use('/api', declaration)
 app.use('/api', getSysDoc)
 app.use('/api', submissionStatus)
 app.use('/api', inviteMentor)
-
-
-
 
 
 app.listen(8080, ()=> console.log("server is running on port: " +8080));
