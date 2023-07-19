@@ -50,6 +50,7 @@ const updateApprovalYes = require('./routes/updateApprovalYes')
 const systemSupportQuery = require('./routes/systemSupportQuery')
 const wilCoQuery = require('./routes/wilCoQuery')
 const regSystemQuery = require('./routes/regSystemQuery')
+const openMonth = require('./routes/openMonth')
 
 app.use('/api', studentRoute)
 app.use('/api', wilRoute)
@@ -83,6 +84,8 @@ app.use('/api', updateApprovalYes)
 app.use('/api', systemSupportQuery)
 app.use('/api', wilCoQuery)
 app.use('/api', regSystemQuery)
+app.use('/api', openMonth)
+
 
 
 
