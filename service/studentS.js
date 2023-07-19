@@ -6,6 +6,7 @@ module.exports = {
  /////////////////CREATE USER FUNCTION FOR STUDENT,ADMIN,REGISTRAR////////////////
 
   create: (data, userType, callBack) => {
+    console.log(data);
     if (userType === "student") {
       conn.query(
         `INSERT INTO student(student_no, initials, surname, gender, email, itsPin) 
@@ -42,6 +43,8 @@ module.exports = {
           return callBack(null, results);
         }
       );
+      
+
     } else if (userType === "registrar") {
       conn.query(
         `INSERT INTO registrar(registrar_no,r_initials,r_surname,r_email,itsPin) 
@@ -59,6 +62,27 @@ module.exports = {
           return callBack(null, results);
         }
       );
+
+    } else if (userType === "wil_coordinator") {
+      conn.query(
+        `INSERT INTO wil_coordinator(wilCoord_id , dept_id, initials, surname, wilCoord_email, itsPin,tel_no) 
+           VALUES (?,?,?,?,?,?,?)`,
+        [data.wilCoord_id, 
+          data.dept_id,
+         data.initials, 
+         data.surname, 
+         data.wilCoord_email,
+         data.itsPin,
+         data.tel_no
+        ],
+        (error, results, fields) => {
+          if (error) {
+            callBack(error);
+          }
+          return callBack(null, results);
+        }
+      );
+
     } 
     else {
       return callBack("Invalid user type");
@@ -116,6 +140,25 @@ module.exports = {
   );
 }
 },
+
+  //////////////////////////////LOGIN FOR wil_coordinator/////////////////////////////////////////////////
+
+getUserByWILCord: (wilCoord_id , userType,callBack) => {
+  if(userType === 'wil_coordinator'){
+  conn.query(
+    `select wilCoord_id ,initials,surname,wilCoord_email,itsPin 
+    FROM wil_coordinator where wilCoord_id = ?`,
+    [wilCoord_id],
+    (error, results, fields) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, results[0]);
+    }
+  );
+}
+},
+
 
 /////////////////GETTING STUDENT INFORMATION TO POPULATE THE RECOMMENDATION LETTER//////////////
 
