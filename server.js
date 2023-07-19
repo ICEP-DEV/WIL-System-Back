@@ -47,6 +47,9 @@ const submitUpdateLogbook = require('./routes/submitUpdateLogbook')
 const getMonthlyLogs = require('./routes/getMonthlyLogs')
 const updateApprovalNo = require('./routes/updateApprovalNo')
 const updateApprovalYes = require('./routes/updateApprovalYes')
+const systemSupportQuery = require('./routes/systemSupportQuery')
+const wilCoQuery = require('./routes/wilCoQuery')
+const regSystemQuery = require('./routes/regSystemQuery')
 
 app.use('/api', studentRoute)
 app.use('/api', wilRoute)
@@ -77,7 +80,9 @@ app.use('/api', submitUpdateLogbook)
 app.use('/api', getMonthlyLogs)
 app.use('/api', updateApprovalNo)
 app.use('/api', updateApprovalYes)
-
+app.use('/api', systemSupportQuery)
+app.use('/api', wilCoQuery)
+app.use('/api', regSystemQuery)
 
 
 
