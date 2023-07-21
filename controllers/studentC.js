@@ -3,6 +3,7 @@ const {
   getUserByAdmin,
   getUserByStudent,
   getUserByRegistrar,
+  getUserByWILCord,
   //getUserByStudentNum,
   getStudentInfoById,
   internshipEvaluation,
@@ -26,7 +27,9 @@ module.exports = {
     const userType = body.userType;
     console.log(userType);
     const salt = genSaltSync(10);
+    console.log("here",body.itsPin);
     body.itsPin = hashSync(body.itsPin, salt);
+   
 
     if (userType === "student") {
       create(body, userType, (err, results) => {
@@ -57,6 +60,20 @@ module.exports = {
         });
       });
     } else if (userType === "registrar") {
+      create(body, userType, (err, results) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            success: 0,
+            message: "Database connection error",
+          });
+        }
+        return res.status(200).json({
+          success: 1,
+          data: results,
+        });
+      });
+    }  else if (userType === "wil_coordinator") {
       create(body, userType, (err, results) => {
         if (err) {
           console.log(err);
@@ -177,6 +194,36 @@ module.exports = {
           return res.json({
             success: 0,
             data: "Invalid registrar number or password",
+          });
+        }
+      });
+    } else if (userType === "wil_coordinator") {
+      getUserByWILCord(body.wilCoord_id, userType, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
+        if (!results) {
+          return res.json({
+            success: 0,
+            data: "Invalid WIL Coordinatior number or password",
+          });
+        }
+        const result = compareSync(body.itsPin, results.itsPin);
+        if (result) {
+          results.itsPin = undefined;
+          const jsontoken = sign({ result: results }, process.env.JWT_KEY, {
+            expiresIn: "1h",
+          });
+          return res.json({
+            success: 1,
+            message: "login successfully",
+            token: jsontoken,
+            data: results,
+          });
+        } else {
+          return res.json({
+            success: 0,
+            data: "Invalid WIL Coordinatior number or password",
           });
         }
       });

@@ -4,7 +4,7 @@ module.exports = {
     conn.query(
       `SELECT A.initials, A.surname, A.student_no, B.approvedEmployer, B.contactPerson, B.telNumber,
         B.emp_email, B.city, B.postalAddress, B.studyPeriod, B.applicationStatus FROM student A, wilform B 
-        WHERE A.student_no = B.student_no AND B.applicationStatus = 'Pending'`,
+        WHERE A.student_no = B.student_no AND B.applicationStatus = 'PENDING'`,
 
       [],
       (error, results, fields) => {
@@ -107,7 +107,7 @@ module.exports = {
           if (data.app_status === "accepted") {
             conn.query(
               `UPDATE wilform SET applicationStatus = ? WHERE student_no = ?`,
-              ["Accepted", data.student_no],
+              ["ACCEPTED", data.student_no],
               (error, results, fields) => {
                 if (error) {
                   callBack(error);

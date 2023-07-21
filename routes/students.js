@@ -41,7 +41,7 @@ const systemUpload = multer({ storage: systemStorage });
 
 
 
-router.post("/", createUser);
+router.post("/register", createUser);
 router.post("/login", login);
 router.get("/info/:student_no", StudentInfoById);
 router.get("/intern", internEvaluation);
