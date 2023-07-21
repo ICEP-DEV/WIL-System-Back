@@ -37,7 +37,7 @@ router.post('/subLogbook/:month', (req, res, next) => {
           // Wait for the next month and update the status to 'open' for the next month and student
           const nextMonth = currentMonth + 1;
           setTimeout(() => {
-            const nextUpdateQuery = `UPDATE logbook SET status = ?, approval = 'no' WHERE student_no = ? AND month = ?`;
+            const nextUpdateQuery = `UPDATE logbook SET status = ?, approval = 'inProgress' WHERE student_no = ? AND month = ?`;
             conn.query(nextUpdateQuery, ['open', studentNo, nextMonth], function (err, result) {
               if (err) {
                 console.error(err);
