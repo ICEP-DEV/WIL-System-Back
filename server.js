@@ -51,6 +51,9 @@ const systemSupportQuery = require('./routes/systemSupportQuery')
 const wilCoQuery = require('./routes/wilCoQuery')
 const regSystemQuery = require('./routes/regSystemQuery')
 const openMonth = require('./routes/openMonth')
+const updateMentor = require('./routes/updateMentor')
+const updateWorkDivision = require('./routes/updateWorkDivision')
+
 
 app.use('/api', studentRoute)
 app.use('/api', wilRoute)
@@ -85,6 +88,8 @@ app.use('/api', systemSupportQuery)
 app.use('/api', wilCoQuery)
 app.use('/api', regSystemQuery)
 app.use('/api', openMonth)
+app.use('/api', updateMentor)
+app.use('/api', updateWorkDivision)
 
 
 
