@@ -5,11 +5,9 @@ const router = express.Router()
 
 
 let studNum;
-let m_id;
-router.patch('/updateMentor/:student_no/:mentor_Id', (req,res, next)=>{
+router.patch('/updateMentor/:student_no', (req,res, next)=>{
    
     studNum = req.params.student_no;
-    mentor_Id = req.params.mentor_Id;
     title = req.body.title;
     m_name = req.body.m_name;
     m_surname= req.body.m_surname;
@@ -22,10 +20,9 @@ router.patch('/updateMentor/:student_no/:mentor_Id', (req,res, next)=>{
     m_surname = ?,
     email_address = ?,
     mobileNo = ?
-    WHERE student_no = ?
-    AND mentor_Id = ?`;
+    WHERE student_no = ?`;
 
-    conn.query(sql, [title,m_name,m_surname,email_address,mobileNo,studNum,mentor_Id], function(err, result){
+    conn.query(sql, [title,m_name,m_surname,email_address,mobileNo,studNum], function(err, result){
         if(err)throw err;
             console.log("Successfully inserted")
     })
