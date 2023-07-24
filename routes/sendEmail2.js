@@ -15,18 +15,20 @@ router.post('/Login', function (req, res) {
 	
 		//Sending an email
 		var transporter = nodemailer.createTransport({
-			service: 'Outlook',
+			host: 'smtp.office365.com',
+        	port: 587,
+        	secure: false,
 			auth: {
-				user: 'Workintergratedlearning@outlook.com',
+				user: 'workintergratedlearning@outlook.com',
 				pass: 'wil@2023'
 			}
 		});
 
 		var mailOptions = {
-			from: 'Workintergratedlearning@outlook.com',
+			from: 'workintergratedlearning@outlook.com',
 		    to: '216430646@tut4life.ac.za',
 			subject: 'Testing',
-			text: 'invite mentor'
+			text: 'Invite mentor'
 		};
 		transporter.sendMail(mailOptions, function (err, res, info) {
 			if (err) {
