@@ -10,13 +10,13 @@ router.post('/send-email', (req, res) => {
     const { from, to, subject, content } = req.body;
   
     const transporter = nodemailer.createTransport({
-      //service: 'Microsoft',
+      //service: 'Office365',
       host: 'smtp.office365.com',
         port: 587,
         secure: false,
       auth: {
-        user: '',
-        pass: ''
+        user: 'workintergratedlearning@outlook.com',
+        pass: 'wil@2023'
       }
     });
   
