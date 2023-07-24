@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-const workDivision = require('./routes/getWorkDivision')
+const workDivision = require('./routes/workDivision')
 
 const sysDocUpload = require('./routes/sysDocUpload')
 const getWorkDivision = require('./routes/getWorkDivision')

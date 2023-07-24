@@ -2,7 +2,7 @@ const express = require('express')
 const conn = require('../config/db')
 const router = express.Router()
 
-router.post('/workInfo', (req,res,next)=>{
+router.post('/workInfo1', (req,res,next)=>{
    
     const values = [     
      req.body.student_no,
@@ -14,7 +14,7 @@ router.post('/workInfo', (req,res,next)=>{
      req.body.suburb,
      req.body.address
     ]
-
+console.log(values);
     const sql = `INSERT INTO workdivision (student_no, companyName, role, departmentName, province, city,
         suburb, address) VALUES (?,?,?,?,?,?,?,?)`
 
