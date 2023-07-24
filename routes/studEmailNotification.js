@@ -53,6 +53,94 @@ transporter.sendMail(emailMessage, (error, info) => {
 });
 module.exports = router; */
 
+const express = require('express');
+const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
+const mysql = require('mysql');
+
+const app = express();
+app.use(express.json());
+
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "wil_system"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+async function getQueryResults() {
+  console.log('Identy found')
+  return new Promise((resolve, reject) => {
+    con.query('SELECT * FROM student', (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(rows);
+        resolve(rows);
+      }
+    });
+  });
+}
+
+app.post('/send-emailNoti', async (req, res) => {
+  const { from, to, subject } = req.body;
+  
+  try {
+    const results = await getQueryResults();
+    const emailTemplate = handlebars.compile(`
+      <h1>Query Results</h1>
+      <p>Here are the results of your query:</p>
+      <ul>
+        {{#each results}}
+          <li>{{this.column_name}}</li>
+        {{/each}}
+      </ul>
+    `);
+
+    const transporter = nodemailer.createTransport({
+      service: 'Office365',
+      host: 'smtp.office365.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: '214735946@tut4life.ac.za',
+        pass: 'Santiago8**'
+      }
+    });
+
+    const mailOptions = {
+      from: "", // Replace with sender's email address
+      to: "", // Replace with recipient's email address
+      subject: "",
+      html: emailTemplate({ results: results })
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log('Error sending email:', error);
+        res.status(500).json({ error: 'An error occurred while sending the email.' });
+      } else {
+        console.log('Email sent:', info.response);
+        res.json({ message: 'Email sent successfully.' });
+      }
+    });
+  } catch (error) {
+    console.log('Error fetching query results:', error);
+    res.status(500).json({ error: 'An error occurred while fetching query results.' });
+  }
+});
+
+const port = 4000; // or any other port of your choice
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
 
 const express = require('express');
 const nodemailer = require('nodemailer');
