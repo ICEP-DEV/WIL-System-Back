@@ -1,4 +1,47 @@
-const express = require('express');
+const express = require('express')
+const bodyParser = require('body-parser')
+const conn = require('../config/db')
+const router = express.Router()
+
+
+let studNum;
+let m_id;
+router.patch('/updateMentor/:student_no/:mentor_Id', (req,res, next)=>{
+   
+    studNum = req.params.student_no;
+    mentor_Id = req.params.mentor_Id;
+    title = req.body.title;
+    m_name = req.body.m_name;
+    m_surname= req.body.m_surname;
+    email_address = req.body.email_address;
+    mobileNo = req.body.mobileNo;
+
+    const sql = `UPDATE mentor SET 
+    title = ?,
+    m_name = ?,
+    m_surname = ?,
+    email_address = ?,
+    mobileNo = ?
+    WHERE student_no = ?
+    AND mentor_Id = ?`;
+
+    conn.query(sql, [title,m_name,m_surname,email_address,mobileNo,studNum,mentor_Id], function(err, result){
+        if(err)throw err;
+            console.log("Successfully inserted")
+    })
+
+    res.status(200).json({'Message' :"Success"});
+})
+
+
+
+module.exports = router;
+
+
+
+
+
+/* const express = require('express');
 const conn = require('../config/db');
 const router = express.Router();
 
@@ -19,4 +62,4 @@ router.post('/updateMentor/:studentNo', (req, res, next) => {
   });
 });
 
-module.exports = router;
+module.exports = router; */

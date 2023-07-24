@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-const workDivision = require('./routes/getWorkDivision')
+const workDivision = require('./routes/workDivision')
 
 const sysDocUpload = require('./routes/sysDocUpload')
 const getWorkDivision = require('./routes/getWorkDivision')
@@ -52,6 +52,8 @@ const wilCoQuery = require('./routes/wilCoQuery')
 const regSystemQuery = require('./routes/regSystemQuery')
 const openMonth = require('./routes/openMonth')
 const updateMentor = require('./routes/updateMentor')
+const updateWorkDivision = require('./routes/updateWorkDivision')
+
 
 app.use('/api', studentRoute)
 app.use('/api', wilRoute)
@@ -87,7 +89,7 @@ app.use('/api', wilCoQuery)
 app.use('/api', regSystemQuery)
 app.use('/api', openMonth)
 app.use('/api', updateMentor)
-
+app.use('/api', updateWorkDivision)
 
 
 
