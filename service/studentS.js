@@ -165,11 +165,12 @@ getUserByWILCord: (wilCoord_id , userType,callBack) => {
 
   getStudentInfoById: (student_no, callBack) => {
     conn.query(
-      `Select A.student_no,A.initials, A.surname, B.dept_id,dep_name,c.roles  
-      FROM student A,stud_dep B,responsibility C, department D 
+      `Select A.student_no,A.initials, A.surname, B.dept_id,dep_name,c.roles, E.course_name
+      FROM student A,stud_dep B,responsibility C, department D, course E
       WHERE A.student_no = ?
       AND B.dept_id = D.dept_id 
       AND C.dept_id = D.dept_id 
+      AND E.dept_id = D.dept_id 
       And  A.student_no = B.student_no`,
       [student_no],
       (error, results, fields) => {
