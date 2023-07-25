@@ -5,7 +5,6 @@ const router = express.Router()
 
 
 let studNum;
-let m_id;
 router.patch('/updateMentor/:student_no', (req,res, next)=>{
    
     studNum = req.params.student_no;
