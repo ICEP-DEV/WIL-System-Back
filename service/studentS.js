@@ -65,10 +65,10 @@ module.exports = {
 
     } else if (userType === "wil_coordinator") {
       conn.query(
-        `INSERT INTO wil_coordinator(wilCoord_id , dept_id, initials, surname, wilCoord_email, itsPin,tel_no) 
-           VALUES (?,?,?,?,?,?,?)`,
+        `INSERT INTO wil_coordinator(wilCoord_id , initials, surname, wilCoord_email, itsPin,tel_no) 
+           VALUES (?,?,?,?,?,?)`,
         [data.wilCoord_id, 
-          data.dept_id,
+         
          data.initials, 
          data.surname, 
          data.wilCoord_email,

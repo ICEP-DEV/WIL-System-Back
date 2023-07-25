@@ -5,11 +5,12 @@ const router = express.Router()
 router.post('/wilQuery', (req,res, next)=>{
    
     const values = [
-     //req.body.wilCoord_id,
-     req.body.queryMessage,    
+    
+     req.body.queryMessage, 
+     req.body.wilCoord_id,   
     ]
 
-    let sql = `INSERT INTO wilcoquerys (queryMessage) VALUES (?)`
+    let sql = `INSERT INTO wilcoquerys  (queryMessage, wilCoord_id) VALUES (?,?)`
 
     conn.query(sql, values, function(err, result){
         if(err)throw err;

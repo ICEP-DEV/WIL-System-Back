@@ -2,11 +2,14 @@ const express = require('express');
 const conn = require('../config/db');
 const router = express.Router();
 
-router.get('/getStudInfo/:wilCoord_email', (req, res, next) => {
-  const 	wilCoord_email = req.params.	wilCoord_email;
-  let sql = `SELECT S.student_no, S.name, S.surname, S.email FROM student S, wil_coordinator W 
-  WHERE S.student_no = W.student_no AND wilCoord_email = ?`;
-  conn.query(sql, [wilCoord_email], (err, result) => {
+router.get('/getStudInfo/:wilCoord_id', (req, res, next) => {
+  const 	wilCoord_id = req.params.	wilCoord_id;
+  let sql = `SELECT S.student_no, S.initials, S.surname, S.email 
+  FROM student S, wil_coordinator W, stud_dep A
+  WHERE S.student_no = A.student_no
+  AND A.wilCoord_id = W.wilCoord_id
+   AND W.wilCoord_id = ?`;
+  conn.query(sql, [wilCoord_id], (err, result) => {
     if (err) {
       throw err;
     } else {

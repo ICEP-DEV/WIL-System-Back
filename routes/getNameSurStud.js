@@ -10,7 +10,7 @@ router.get('/studNum/:studentNo', (req, res, next) => {
 });
 
 router.get('/getNameSur', (req, res, next) => {
-  let sql = 'SELECT name, surname, student_no FROM student';
+  let sql = 'SELECT initials, surname, student_no FROM student';
   conn.query(sql, [studNum], (err, result) => {
     if (err) throw err;
     res.status(200).json({ result });
