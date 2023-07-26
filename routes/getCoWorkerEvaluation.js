@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/getCoInfo/:student_no', (req, res, next) => {
   const studNum = req.params.student_no;
-  let sql = `SELECT student_no, coworkerAssistance, coworkerInterest, coworkerTraining, coworkerMotivation
+  let sql = `SELECT student_no, coworkerAssistance, coworkerInterest, coworkerTraining, coworkerMotivation,
   coworkerInstruction FROM evaluation_criteria WHERE student_no = ?`;
   conn.query(sql, [studNum], (err, result) => {
     if (err) throw err;

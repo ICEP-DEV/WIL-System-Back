@@ -2,7 +2,7 @@ const express = require('express');
 const conn = require('../config/db');
 const router = express.Router();
 
-router.post('/subLogbook/:month', (req, res, next) => {
+router.post('/subLogbook', (req, res, next) => {
   const logMonth = req.params.month;
   const studentNo = req.body.student_no;
   const date = req.body.date;
@@ -13,10 +13,10 @@ router.post('/subLogbook/:month', (req, res, next) => {
   const currentMonth = currentDate.getMonth() + 1;
 
   // Insert a new logbook entry
-  const insertQuery = `UPDATE logbook SET student_no = ?, date = ?, log_description = ?, submitted_at = ? WHERE month = ? AND student_no = ?`;
+  const insertQuery = `UPDATE logbook SET  date = ?, log_description = ?, submitted_at = ? WHERE month = ? AND student_no = ?`;
   conn.query(
     insertQuery,
-    [studentNo, date, logDescription, submittedAt, logMonth, studentNo],
+    [ date, logDescription, submittedAt, currentMonth, studentNo],
     function (err, result) {
       if (err) {
         console.error(err);
